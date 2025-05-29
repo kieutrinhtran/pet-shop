@@ -27,7 +27,7 @@ pet-shop/
 
 ## Hướng dẫn khởi tạo dự án Vue và kết nối GitHub
 
-### 🚀 Tạo project Vue mới
+### 🚀 Tạo project Vue mới (vì đã tạo rồi nên không cần làm lại bước này)
 
 1. Mở terminal và chuyển đến thư mục bạn muốn lưu project:
 

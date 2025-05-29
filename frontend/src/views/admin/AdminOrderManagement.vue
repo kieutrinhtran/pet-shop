@@ -2,32 +2,46 @@
   <div class="admin-order-management">
     <!-- Header -->
     <header class="header">
-      <div class="header-top
-">
+      <div class="header-top">
         <div class="contact-info">
           <span>📞 +84 123 456 789</span>
           <span>✉️ wearpet@petshop.com</span>
         </div>
         <div class="store-management">🏪 Quản lý cửa hàng</div>
       </div>
-      
+
       <nav class="nav">
         <div class="nav-content">
           <div class="logo">Pet World</div>
           <ul class="nav-menu">
-            <li @click="navigateTo('customers')" :class="{ active: activeTab === 'customers' }">
+            <li
+              @click="navigateTo('customers')"
+              :class="{ active: activeTab === 'customers' }"
+            >
               Khách hàng
             </li>
-            <li @click="navigateTo('orders')" :class="{ active: activeTab === 'orders' }">
+            <li
+              @click="navigateTo('orders')"
+              :class="{ active: activeTab === 'orders' }"
+            >
               Đơn hàng
             </li>
-            <li @click="navigateTo('products')" :class="{ active: activeTab === 'products' }">
+            <li
+              @click="navigateTo('products')"
+              :class="{ active: activeTab === 'products' }"
+            >
               Sản phẩm
             </li>
-            <li @click="navigateTo('promotions')" :class="{ active: activeTab === 'promotions' }">
+            <li
+              @click="navigateTo('promotions')"
+              :class="{ active: activeTab === 'promotions' }"
+            >
               Mô khuyển mai
             </li>
-            <li @click="navigateTo('statistics')" :class="{ active: activeTab === 'statistics' }">
+            <li
+              @click="navigateTo('statistics')"
+              :class="{ active: activeTab === 'statistics' }"
+            >
               Thống kê
             </li>
           </ul>
@@ -40,14 +54,14 @@
       <div class="hero-content">
         <div class="hero-text">
           <div class="hero-subtitle">Pet World</div>
-          <h1>Thiên đường mua sắm<br>dành cho thú cưng!</h1>
+          <h1>Thiên đường mua sắm<br />dành cho thú cưng!</h1>
           <div class="search-container">
-            <input 
-              type="text" 
+            <input
+              type="text"
               v-model="searchQuery"
               @input="handleSearch"
               :placeholder="`Hiện thị ${filteredOrders.length} từ ${totalOrders} kết quả tìm kiếm`"
-            >
+            />
             <button @click="handleSearch">Tìm kiếm</button>
           </div>
         </div>
@@ -64,7 +78,11 @@
       <div class="orders-header">
         <h2>Danh sách đơn hàng</h2>
         <div class="order-controls">
-          <select v-model="statusFilter" @change="applyFilters" class="filter-select">
+          <select
+            v-model="statusFilter"
+            @change="applyFilters"
+            class="filter-select"
+          >
             <option value="">Tất cả trạng thái</option>
             <option value="pending">Chờ xử lý</option>
             <option value="processing">Đang xử lý</option>
@@ -72,7 +90,11 @@
             <option value="delivered">Đã nhận hàng</option>
             <option value="cancelled">Đã hủy</option>
           </select>
-          <select v-model="paymentStatusFilter" @change="applyFilters" class="filter-select">
+          <select
+            v-model="paymentStatusFilter"
+            @change="applyFilters"
+            class="filter-select"
+          >
             <option value="">Tất cả thanh toán</option>
             <option value="paid">Đã thanh toán</option>
             <option value="unpaid">Chưa thanh toán</option>
@@ -100,21 +122,30 @@
             <tr>
               <th @click="sortBy('id')" class="sortable">
                 ID đơn hàng
-                <span v-if="sortField === 'id'" :class="['sort-arrow', sortDirection]">
-                  {{ sortDirection === 'asc' ? '↑' : '↓' }}
+                <span
+                  v-if="sortField === 'id'"
+                  :class="['sort-arrow', sortDirection]"
+                >
+                  {{ sortDirection === "asc" ? "↑" : "↓" }}
                 </span>
               </th>
               <th @click="sortBy('created_at')" class="sortable">
                 Ngày đặt
-                <span v-if="sortField === 'created_at'" :class="['sort-arrow', sortDirection]">
-                  {{ sortDirection === 'asc' ? '↑' : '↓' }}
+                <span
+                  v-if="sortField === 'created_at'"
+                  :class="['sort-arrow', sortDirection]"
+                >
+                  {{ sortDirection === "asc" ? "↑" : "↓" }}
                 </span>
               </th>
               <th>Khách hàng</th>
               <th @click="sortBy('total_amount')" class="sortable">
                 Tổng giá trị
-                <span v-if="sortField === 'total_amount'" :class="['sort-arrow', sortDirection]">
-                  {{ sortDirection === 'asc' ? '↑' : '↓' }}
+                <span
+                  v-if="sortField === 'total_amount'"
+                  :class="['sort-arrow', sortDirection]"
+                >
+                  {{ sortDirection === "asc" ? "↑" : "↓" }}
                 </span>
               </th>
               <th>Phương thức thanh toán</th>
@@ -124,11 +155,21 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="order in paginatedOrders" :key="order.id" @click="viewOrderDetails(order.id)">
-              <td><span class="order-id">#{{ order.id }}</span></td>
+            <tr
+              v-for="order in paginatedOrders"
+              :key="order.id"
+              @click="viewOrderDetails(order.id)"
+            >
+              <td>
+                <span class="order-id">#{{ order.id }}</span>
+              </td>
               <td>{{ formatDate(order.created_at) }}</td>
               <td>{{ order.customer_name }}</td>
-              <td><span class="price">{{ formatCurrency(order.total_amount) }}</span></td>
+              <td>
+                <span class="price">{{
+                  formatCurrency(order.total_amount)
+                }}</span>
+              </td>
               <td>{{ getPaymentMethodText(order.payment_method) }}</td>
               <td>
                 <span :class="['status', order.payment_status]">
@@ -142,23 +183,23 @@
               </td>
               <td @click.stop>
                 <div class="actions">
-                  <button 
+                  <button
                     class="action-btn edit"
                     v-tooltip="'Chỉnh sửa đơn hàng'"
                     @click="editOrder(order)"
                   >
                     ✏️
                   </button>
-                  <button 
-                    @click="confirmDelete(order.id)" 
-                    class="action-btn delete" 
+                  <button
+                    @click="confirmDelete(order.id)"
+                    class="action-btn delete"
                     title="Xóa"
                   >
                     🗑️
                   </button>
-                  <button 
-                    @click="viewOrderDetails(order.id)" 
-                    class="action-btn view" 
+                  <button
+                    @click="viewOrderDetails(order.id)"
+                    class="action-btn view"
                     title="Xem chi tiết"
                   >
                     👁️
@@ -177,25 +218,25 @@
 
       <!-- Pagination -->
       <div v-if="filteredOrders.length > itemsPerPage" class="pagination">
-        <button 
-          @click="goToPage(currentPage - 1)" 
+        <button
+          @click="goToPage(currentPage - 1)"
           :disabled="currentPage === 1"
           class="pagination-btn"
         >
           ‹ Trước
         </button>
-        
-        <button 
-          v-for="page in visiblePages" 
+
+        <button
+          v-for="page in visiblePages"
           :key="page"
           @click="goToPage(page)"
           :class="['pagination-btn', { active: page === currentPage }]"
         >
           {{ page }}
         </button>
-        
-        <button 
-          @click="goToPage(currentPage + 1)" 
+
+        <button
+          @click="goToPage(currentPage + 1)"
           :disabled="currentPage === totalPages"
           class="pagination-btn"
         >
@@ -232,13 +273,17 @@
           </div>
           <div class="form-group">
             <label>Ghi chú:</label>
-            <textarea v-model="editingOrder.notes" class="form-control" rows="3"></textarea>
+            <textarea
+              v-model="editingOrder.notes"
+              class="form-control"
+              rows="3"
+            ></textarea>
           </div>
         </div>
         <div class="modal-footer">
           <button @click="closeEditModal" class="btn btn-secondary">Hủy</button>
           <button @click="saveOrder" class="btn btn-primary" :disabled="saving">
-            {{ saving ? 'Đang lưu...' : 'Lưu thay đổi' }}
+            {{ saving ? "Đang lưu..." : "Lưu thay đổi" }}
           </button>
         </div>
       </div>
@@ -249,7 +294,10 @@
       <div class="footer-content">
         <div class="footer-section">
           <h3>🐾 Pet Shop</h3>
-          <p>Chúng tôi thông qua phục vụ thú cưng - một con vật đáng hàng cung bạn khi hành trình yêu thương chúng.</p>
+          <p>
+            Chúng tôi thông qua phục vụ thú cưng - một con vật đáng hàng cung
+            bạn khi hành trình yêu thương chúng.
+          </p>
         </div>
         <div class="footer-section">
           <h3>Store</h3>
@@ -258,355 +306,391 @@
           <p>✉️ wearpet@petshop.com</p>
         </div>
       </div>
-      <div class="footer-bottom">
-        © Copyright Pet Shop. 2024
-      </div>
+      <div class="footer-bottom">© Copyright Pet Shop. 2024</div>
     </footer>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
-  name: 'AdminOrderManagement',
+  name: "AdminOrderManagement",
   data() {
     return {
-      activeTab: 'orders',
+      activeTab: "orders",
       orders: [],
       filteredOrders: [],
       loading: false,
       error: null,
-      searchQuery: '',
-      statusFilter: '',
-      paymentStatusFilter: '',
-      sortField: 'created_at',
-      sortDirection: 'desc',
-      
+      searchQuery: "",
+      statusFilter: "",
+      paymentStatusFilter: "",
+      sortField: "created_at",
+      sortDirection: "desc",
+
       // Pagination
       currentPage: 1,
       itemsPerPage: 10,
-      
+
       // Modal
       showEditModal: false,
       editingOrder: {},
       saving: false,
-      
+
       // API configuration
-      apiBaseUrl: process.env.VUE_APP_API_URL || 'http://localhost/api',
-      
+      apiBaseUrl: process.env.VUE_APP_API_URL || "http://localhost/api",
+
       // Loading states
       loadingStates: {
         fetchingOrders: false,
         deletingOrder: false,
-        savingOrder: false
-      }
-    }
+        savingOrder: false,
+      },
+    };
   },
-  
+
   computed: {
     totalOrders() {
-      return this.orders.length
+      return this.orders.length;
     },
-    
+
     totalPages() {
-      return Math.ceil(this.filteredOrders.length / this.itemsPerPage)
+      return Math.ceil(this.filteredOrders.length / this.itemsPerPage);
     },
-    
+
     paginatedOrders() {
-      const start = (this.currentPage - 1) * this.itemsPerPage
-      const end = start + this.itemsPerPage
-      return this.filteredOrders.slice(start, end)
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.filteredOrders.slice(start, end);
     },
-    
+
     visiblePages() {
-      const pages = []
-      const total = this.totalPages
-      const current = this.currentPage
-      
+      const pages = [];
+      const total = this.totalPages;
+      const current = this.currentPage;
+
       // Show first page
-      if (current > 3) pages.push(1)
-      if (current > 4) pages.push('...')
-      
+      if (current > 3) pages.push(1);
+      if (current > 4) pages.push("...");
+
       // Show pages around current
-      for (let i = Math.max(1, current - 2); i <= Math.min(total, current + 2); i++) {
-        pages.push(i)
+      for (
+        let i = Math.max(1, current - 2);
+        i <= Math.min(total, current + 2);
+        i++
+      ) {
+        pages.push(i);
       }
-      
+
       // Show last page
-      if (current < total - 3) pages.push('...')
-      if (current < total - 2) pages.push(total)
-      
-      return pages
-    }
+      if (current < total - 3) pages.push("...");
+      if (current < total - 2) pages.push(total);
+
+      return pages;
+    },
   },
-  
+
   watch: {
     searchQuery: {
-      handler: 'applyFilters',
-      immediate: false
-    }
+      handler: "applyFilters",
+      immediate: false,
+    },
   },
-  
+
   mounted() {
-    this.fetchOrders()
+    this.fetchOrders();
   },
-  
+
   methods: {
     // API calls
     async fetchOrders() {
-      this.loading = true
-      this.error = null
-      
+      this.loading = true;
+      this.error = null;
+
       try {
         const response = await axios.get(`${this.apiBaseUrl}/orders`, {
           headers: {
-            'Authorization': `Bearer ${this.$store.getters.authToken}`,
-            'Content-Type': 'application/json'
-          }
-        })
-        
-        this.orders = response.data.data || response.data
-        this.applyFilters()
+            Authorization: `Bearer ${this.$store.getters.authToken}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        this.orders = response.data.data || response.data;
+        this.applyFilters();
       } catch (error) {
-        console.error('Error fetching orders:', error)
-        this.error = 'Không thể tải danh sách đơn hàng. Vui lòng thử lại.'
+        console.error("Error fetching orders:", error);
+        this.error = "Không thể tải danh sách đơn hàng. Vui lòng thử lại.";
       } finally {
-        this.loading = false
+        this.loading = false;
       }
     },
-    
+
     async saveOrder() {
-      this.saving = true
-      
+      this.saving = true;
+
       try {
         const response = await axios.put(
           `${this.apiBaseUrl}/orders/${this.editingOrder.id}`,
           {
             status: this.editingOrder.status,
             payment_status: this.editingOrder.payment_status,
-            notes: this.editingOrder.notes
+            notes: this.editingOrder.notes,
           },
           {
             headers: {
-              'Authorization': `Bearer ${this.$store.getters.authToken}`,
-              'Content-Type': 'application/json'
-            }
+              Authorization: `Bearer ${this.$store.getters.authToken}`,
+              "Content-Type": "application/json",
+            },
           }
-        )
-        
+        );
+
         // Update local data
-        const index = this.orders.findIndex(order => order.id === this.editingOrder.id)
+        const index = this.orders.findIndex(
+          (order) => order.id === this.editingOrder.id
+        );
         if (index !== -1) {
-          this.orders[index] = { ...this.orders[index], ...response.data.data }
+          this.orders[index] = { ...this.orders[index], ...response.data.data };
         }
-        
-        this.applyFilters()
-        this.closeEditModal()
-        this.$toast.success('Cập nhật đơn hàng thành công!')
-        
+
+        this.applyFilters();
+        this.closeEditModal();
+        this.$toast.success("Cập nhật đơn hàng thành công!");
       } catch (error) {
-        console.error('Error saving order:', error)
-        this.$toast.error('Không thể cập nhật đơn hàng. Vui lòng thử lại.')
+        console.error("Error saving order:", error);
+        this.$toast.error("Không thể cập nhật đơn hàng. Vui lòng thử lại.");
       } finally {
-        this.saving = false
+        this.saving = false;
       }
     },
-    
+
     async deleteOrder(orderId) {
-      if (!confirm('Bạn có chắc chắn muốn xóa đơn hàng này?')) return
-      
+      if (!confirm("Bạn có chắc chắn muốn xóa đơn hàng này?")) return;
+
       try {
         await axios.delete(`${this.apiBaseUrl}/orders/${orderId}`, {
           headers: {
-            'Authorization': `Bearer ${this.$store.getters.authToken}`
-          }
-        })
-        
-        this.orders = this.orders.filter(order => order.id !== orderId)
-        this.applyFilters()
-        this.$toast.success('Xóa đơn hàng thành công!')
-        
+            Authorization: `Bearer ${this.$store.getters.authToken}`,
+          },
+        });
+
+        this.orders = this.orders.filter((order) => order.id !== orderId);
+        this.applyFilters();
+        this.$toast.success("Xóa đơn hàng thành công!");
       } catch (error) {
-        console.error('Error deleting order:', error)
-        this.$toast.error('Không thể xóa đơn hàng. Vui lòng thử lại.')
+        console.error("Error deleting order:", error);
+        this.$toast.error("Không thể xóa đơn hàng. Vui lòng thử lại.");
       }
     },
-    
+
     async confirmDelete(orderId) {
-      if (await this.$confirm('Bạn có chắc muốn xóa đơn hàng này?')) {
-        this.deleteOrder(orderId)
+      if (await this.$confirm("Bạn có chắc muốn xóa đơn hàng này?")) {
+        this.deleteOrder(orderId);
       }
     },
-    
+
     // Filtering and sorting
     applyFilters() {
-      let filtered = [...this.orders]
-      
+      let filtered = [...this.orders];
+
       // Search filter
       if (this.searchQuery) {
-        const query = this.searchQuery.toLowerCase()
-        filtered = filtered.filter(order => 
-          order.id.toString().includes(query) ||
-          order.customer_name.toLowerCase().includes(query) ||
-          order.customer_email.toLowerCase().includes(query)
-        )
+        const query = this.searchQuery.toLowerCase();
+        filtered = filtered.filter(
+          (order) =>
+            order.id.toString().includes(query) ||
+            order.customer_name.toLowerCase().includes(query) ||
+            order.customer_email.toLowerCase().includes(query)
+        );
       }
-      
+
       // Status filters
       if (this.statusFilter) {
-        filtered = filtered.filter(order => order.status === this.statusFilter)
+        filtered = filtered.filter(
+          (order) => order.status === this.statusFilter
+        );
       }
-      
+
       if (this.paymentStatusFilter) {
-        filtered = filtered.filter(order => order.payment_status === this.paymentStatusFilter)
+        filtered = filtered.filter(
+          (order) => order.payment_status === this.paymentStatusFilter
+        );
       }
-      
+
       // Sort
       filtered.sort((a, b) => {
-        let aVal = a[this.sortField]
-        let bVal = b[this.sortField]
-        
-        if (this.sortField === 'total_amount') {
-          aVal = parseFloat(aVal)
-          bVal = parseFloat(bVal)
+        let aVal = a[this.sortField];
+        let bVal = b[this.sortField];
+
+        if (this.sortField === "total_amount") {
+          aVal = parseFloat(aVal);
+          bVal = parseFloat(bVal);
         }
-        
-        if (this.sortDirection === 'asc') {
-          return aVal > bVal ? 1 : -1
+
+        if (this.sortDirection === "asc") {
+          return aVal > bVal ? 1 : -1;
         } else {
-          return aVal < bVal ? 1 : -1
+          return aVal < bVal ? 1 : -1;
         }
-      })
-      
-      this.filteredOrders = filtered
-      this.currentPage = 1 // Reset to first page when filtering
+      });
+
+      this.filteredOrders = filtered;
+      this.currentPage = 1; // Reset to first page when filtering
     },
-    
+
     sortBy(field) {
       if (this.sortField === field) {
-        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc'
+        this.sortDirection = this.sortDirection === "asc" ? "desc" : "asc";
       } else {
-        this.sortField = field
-        this.sortDirection = 'asc'
+        this.sortField = field;
+        this.sortDirection = "asc";
       }
-      this.applyFilters()
+      this.applyFilters();
     },
-    
+
     handleSearch() {
-      this.applyFilters()
+      this.applyFilters();
     },
-    
+
     // Navigation
     navigateTo(tab) {
-      this.activeTab = tab
+      this.activeTab = tab;
       // Emit event or use router to navigate
-      this.$emit('navigate', tab)
+      this.$emit("navigate", tab);
     },
-    
+
     // Pagination
     goToPage(page) {
       if (page >= 1 && page <= this.totalPages) {
-        this.currentPage = page
+        this.currentPage = page;
       }
     },
-    
+
     // Modal handling
     editOrder(order) {
-      this.editingOrder = { ...order }
-      this.showEditModal = true
+      this.editingOrder = { ...order };
+      this.showEditModal = true;
     },
-    
+
     closeEditModal() {
-      this.showEditModal = false
-      this.editingOrder = {}
+      this.showEditModal = false;
+      this.editingOrder = {};
     },
-    
+
     viewOrderDetails(orderId) {
       // Navigate to order details page
-      this.$router.push(`/admin/orders/${orderId}`)
+      this.$router.push(`/admin/orders/${orderId}`);
     },
-    
+
     // Formatting helpers
     formatDate(dateString) {
-      const date = new Date(dateString)
-      return date.toLocaleDateString('vi-VN', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      })
+      const date = new Date(dateString);
+      return date.toLocaleDateString("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
     },
-    
+
     formatCurrency(amount) {
-      return new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND'
-      }).format(amount)
+      return new Intl.NumberFormat("vi-VN", {
+        style: "currency",
+        currency: "VND",
+      }).format(amount);
     },
-    
+
     getPaymentMethodText(method) {
       const methods = {
-        'cod': 'Thanh toán khi nhận hàng',
-        'bank_transfer': 'Chuyển khoản ngân hàng',
-        'credit_card': 'Thẻ tín dụng',
-        'e_wallet': 'Ví điện tử'
-      }
-      return methods[method] || method
+        cod: "Thanh toán khi nhận hàng",
+        bank_transfer: "Chuyển khoản ngân hàng",
+        credit_card: "Thẻ tín dụng",
+        e_wallet: "Ví điện tử",
+      };
+      return methods[method] || method;
     },
-    
+
     getPaymentStatusText(status) {
       const statuses = {
-        'unpaid': 'Chưa thanh toán',
-        'paid': 'Đã thanh toán',
-        'refunded': 'Đã hoàn tiền'
-      }
-      return statuses[status] || status
+        unpaid: "Chưa thanh toán",
+        paid: "Đã thanh toán",
+        refunded: "Đã hoàn tiền",
+      };
+      return statuses[status] || status;
     },
-    
+
     getOrderStatusText(status) {
       const statuses = {
-        'pending': 'Chờ xử lý',
-        'processing': 'Đang xử lý',
-        'shipped': 'Đã giao hàng',
-        'delivered': 'Đã nhận hàng',
-        'cancelled': 'Đã hủy'
-      }
-      return statuses[status] || status
+        pending: "Chờ xử lý",
+        processing: "Đang xử lý",
+        shipped: "Đã giao hàng",
+        delivered: "Đã nhận hàng",
+        cancelled: "Đã hủy",
+      };
+      return statuses[status] || status;
     },
-    
+
     handleError(error) {
       if (error.response) {
-        this.error = error.response.data.message || 'Có lỗi xảy ra'
+        this.error = error.response.data.message || "Có lỗi xảy ra";
       } else {
-        this.error = 'Không thể kết nối đến server'
+        this.error = "Không thể kết nối đến server";
       }
     },
-    
+
     validateOrder() {
-      const errors = []
+      const errors = [];
       if (!this.editingOrder.status) {
-        errors.push('Trạng thái đơn hàng không được để trống')
+        errors.push("Trạng thái đơn hàng không được để trống");
       }
       if (!this.editingOrder.payment_status) {
-        errors.push('Trạng thái thanh toán không được để trống')  
+        errors.push("Trạng thái thanh toán không được để trống");
       }
-      return errors
+      return errors;
     },
-    
+
     exportToCsv() {
-      const headers = ['ID', 'Ngày đặt', 'Khách hàng', 'Tổng tiền', 'Trạng thái']
-      const data = this.orders.map(order => [
-        order.id,
-        this.formatDate(order.created_at),
-        order.customer_name,
-        order.total_amount,
-        this.getOrderStatusText(order.status)
-      ])
-      
-      // Export logic here
-    }
-  }
-}
+      try {
+        const headers = [
+          "ID",
+          "Ngày đặt",
+          "Khách hàng",
+          "Tổng tiền",
+          "Trạng thái",
+        ];
+        const data = this.orders.map((order) => [
+          order.id,
+          this.formatDate(order.created_at),
+          order.customer_name,
+          order.total_amount,
+          this.getOrderStatusText(order.status),
+        ]);
+
+        const csvContent = [
+          headers.join(","),
+          ...data.map((row) => row.join(",")),
+        ].join("\n");
+
+        const blob = new Blob([csvContent], {
+          type: "text/csv;charset=utf-8;",
+        });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+
+        link.setAttribute("href", url);
+        link.setAttribute("download", `orders-${new Date().toISOString()}.csv`);
+        link.style.visibility = "hidden";
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url); // Clean up the URL object
+      } catch (error) {
+        console.error("Error exporting CSV:", error);
+        this.$toast.error("Không thể xuất file CSV. Vui lòng thử lại.");
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -617,7 +701,7 @@ export default {
 }
 
 .admin-order-management {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f8f9fa;
   color: #333;
   min-height: 100vh;
@@ -627,7 +711,7 @@ export default {
 .header {
   background: white;
   padding: 15px 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -726,7 +810,7 @@ export default {
 }
 
 .hero-subtitle {
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 10px;
 }
 
@@ -743,7 +827,7 @@ export default {
   padding: 4px;
   display: flex;
   max-width: 400px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .search-container input {
@@ -771,7 +855,7 @@ export default {
 .hero-circle {
   width: 300px;
   height: 300px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   position: relative;
   overflow: hidden;
@@ -783,7 +867,8 @@ export default {
   right: -20px;
   width: 200px;
   height: 200px;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="%23333"/><circle cx="80" cy="80" r="8" fill="white"/><circle cx="120" cy="80" r="8" fill="white"/><path d="M90 110 Q100 120 110 110" stroke="white" fill="none" stroke-width="3"/></svg>') center/contain no-repeat;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="%23333"/><circle cx="80" cy="80" r="8" fill="white"/><circle cx="120" cy="80" r="8" fill="white"/><path d="M90 110 Q100 120 110 110" stroke="white" fill="none" stroke-width="3"/></svg>')
+    center/contain no-repeat;
   border-radius: 50%;
 }
 
@@ -820,12 +905,13 @@ export default {
 }
 
 /* Loading and Error States */
-.loading-container, .error-container {
+.loading-container,
+.error-container {
   text-align: center;
   padding: 60px 20px;
   background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .loading-spinner {
@@ -839,8 +925,12 @@ export default {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .retry-btn {
@@ -858,7 +948,7 @@ export default {
   background: white;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .data-table {
@@ -979,10 +1069,10 @@ export default {
   cursor: pointer;
   display: flex;
   justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    color: #ff6b35;
-    transition: all 0.2s;
+  align-items: center;
+  font-size: 16px;
+  color: #ff6b35;
+  transition: all 0.2s;
 }
 .action-btn:hover {
   background: #ff6b35;
@@ -1060,7 +1150,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1071,7 +1161,7 @@ export default {
   width: 500px;
   max-width: 90%;
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 .modal-header {
   display: flex;
@@ -1186,26 +1276,27 @@ export default {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .nav-menu {
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .hero-content {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .hero-image {
     margin-top: 20px;
   }
-  
-  .data-table th, .data-table td {
+
+  .data-table th,
+  .data-table td {
     font-size: 12px;
     padding: 10px;
   }
-  
+
   .search-container {
     width: 100%;
     max-width: none;
@@ -1216,22 +1307,22 @@ export default {
     font-size: 32px;
     text-align: center;
   }
-  
+
   .hero-subtitle {
     text-align: center;
   }
-  
+
   .search-container {
     width: 100%;
     max-width: none;
     margin-top: 20px;
   }
-  
+
   .orders-header {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .order-controls {
     width: 100%;
     display: flex;
@@ -1244,22 +1335,23 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .hero-text {
     text-align: center;
   }
-  
+
   .hero-image {
     width: 100%;
     max-width: 300px;
     margin-top: 20px;
   }
-  
-  .data-table th, .data-table td {
+
+  .data-table th,
+  .data-table td {
     font-size: 12px;
     padding: 8px;
   }
-  
+
   .pagination-btn {
     padding: 6px 10px;
     font-size: 12px;
@@ -1269,22 +1361,23 @@ export default {
   .hero-text h1 {
     font-size: 28px;
   }
-  
+
   .hero-subtitle {
     font-size: 16px;
   }
-  
+
   .search-container input {
     font-size: 12px;
     padding: 8px;
   }
-  
+
   .search-container button {
     padding: 8px 12px;
     font-size: 12px;
   }
-  
-  .data-table th, .data-table td {
+
+  .data-table th,
+  .data-table td {
     font-size: 10px;
     padding: 6px;
   }
@@ -1293,25 +1386,25 @@ export default {
   .hero-text h1 {
     font-size: 24px;
   }
-  
+
   .hero-subtitle {
     font-size: 14px;
   }
-  
+
   .search-container input {
     font-size: 10px;
     padding: 6px;
   }
-  
+
   .search-container button {
     padding: 6px 10px;
     font-size: 10px;
   }
-  
-  .data-table th, .data-table td {
+
+  .data-table th,
+  .data-table td {
     font-size: 10px;
     padding: 4px;
   }
 }
 </style>
-

@@ -1,4 +1,29 @@
-# pet-shop
+# Pet Shop Project
+
+## Cấu trúc thư mục
+```
+pet-shop/
+├── frontend/                 # Ứng dụng Vue.js phía client
+│   ├── public/              # Các file tĩnh
+│   └── src/                 # Mã nguồn
+│       ├── assets/          # Hình ảnh, font chữ, etc.
+│       ├── components/      # Các component Vue
+│       ├── views/           # Các trang Vue
+│       ├── App.vue          # Component gốc
+│       └── main.js          # Điểm khởi đầu ứng dụng
+│
+├── backend/                  # Ứng dụng phía server
+│   ├── admin/               # Trang quản trị
+│   └── config/              # Các file cấu hình
+│
+├── .editorconfig            # Cấu hình editor
+├── .gitignore              # Quy tắc bỏ qua Git
+├── babel.config.js         # Cấu hình Babel
+├── jsconfig.json           # Cấu hình JavaScript
+├── package.json            # Các dependency của dự án
+├── vue.config.js           # Cấu hình Vue.js
+└── README.md               # Tài liệu dự án
+```
 
 ## Hướng dẫn khởi tạo dự án Vue và kết nối GitHub
 
@@ -77,30 +102,24 @@ git commit -m "initial commit"
 
 ---
 
-## Project setup
+## Cài đặt và chạy dự án
 
+### Cài đặt dependencies
 ```bash
 npm install
 ```
 
-### Compiles and hot-reloads for development
-
+### Chạy môi trường phát triển
 ```bash
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Build cho production
 
 ```bash
 npm run build
 ```
-
-### Lints and fixes files
-
+### Kiểm tra và sửa lỗi code
 ```bash
 npm run lint
 ```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).

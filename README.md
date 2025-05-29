@@ -53,7 +53,7 @@ git commit -m "initial commit"
    ```bash
    git branch
    ```
-2. Tạo và chuyển sang nhánh mới (thay `trinh` bằng tên bạn muốn):
+2. Tạo và chuyển sang nhánh mới (thay `trinh` bằng tên của bạn, sau này chỉ push code lên branch của mình):
 
    ```bash
    git checkout -b trinh

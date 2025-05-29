@@ -115,10 +115,10 @@ npm run serve
 ```
 
 ### Build cho production
+
 ```bash
 npm run build
 ```
-
 ### Kiểm tra và sửa lỗi code
 ```bash
 npm run lint

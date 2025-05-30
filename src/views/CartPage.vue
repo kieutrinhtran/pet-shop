@@ -46,7 +46,7 @@
             <button @click="increase(item)" class="quantity-btn">+</button>
           </div>
           <div class="item-total">{{ (item.price * item.quantity).toLocaleString() }}đ</div>
-          <button @click="remove(item)" class="remove-btn" title="Xóa sản phẩm">
+          <button @click="remove(item, $event)" class="remove-btn" title="Xóa sản phẩm">
             <i class="fas fa-trash-alt"></i>
           </button>
         </div>
@@ -105,10 +105,10 @@ export default {
         this.cart.updateQuantity(item.id, item.quantity - 1)
       }
     },
-    remove(item) {
+    remove(item, event) {
       if (this.isRemoving) return
       this.isRemoving = true
-      const element = event.target.closest('.cart-item')
+      const element = event?.target?.closest && event.target.closest('.cart-item')
       if (element) {
         element.classList.add('removing')
       }
@@ -165,6 +165,7 @@ export default {
   justify-content: center;
   margin-bottom: 8px;
   font-weight: bold;
+  font-size: 1rem;
 }
 
 .step.active .step-number {
@@ -230,11 +231,12 @@ export default {
 .item-name {
   font-weight: 600;
   margin-bottom: 4px;
+  font-size: 1.06rem;
 }
 
 .item-category {
   color: #666;
-  font-size: 0.9em;
+  font-size: 0.94rem;
 }
 
 .item-quantity {
@@ -310,7 +312,7 @@ export default {
   border: none;
   border-radius: 8px;
   padding: 12px;
-  font-size: 1.1em;
+  font-size: 1.125rem;
   cursor: pointer;
   margin-top: 16px;
   display: flex;
@@ -354,6 +356,125 @@ export default {
   
   .item-quantity {
     justify-content: center;
+  }
+}
+
+/* Tablet (768px) */
+@media (max-width: 768px) {
+  .cart-page {
+    padding: 20px;
+  }
+
+  .cart-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .cart-items {
+    width: 100%;
+  }
+
+  .cart-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .item-image {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+  }
+
+  .item-details {
+    width: 100%;
+  }
+
+  .quantity-controls {
+    justify-content: center;
+  }
+
+  .remove-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .cart-summary {
+    width: 100%;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    z-index: 10;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  }
+}
+
+/* Mobile (480px) */
+@media (max-width: 480px) {
+  .cart-page {
+    padding: 15px;
+  }
+
+  .cart-page h1 {
+    font-size: 1.5rem;
+  }
+
+  .cart-container {
+    gap: 20px;
+  }
+
+  .cart-item {
+    padding: 10px 0;
+  }
+
+  .item-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .item-details h3 {
+    font-size: 1rem;
+  }
+
+  .price {
+    font-size: 0.94rem;
+  }
+
+  .quantity-controls button {
+    width: 25px;
+    height: 25px;
+  }
+
+  .cart-summary {
+    padding: 15px;
+  }
+
+  .summary-item {
+    font-size: 0.88rem;
+  }
+
+  .checkout-btn {
+    font-size: 1rem;
+  }
+}
+
+/* Add smooth transitions */
+.cart-container,
+.cart-item,
+.cart-summary,
+.quantity-controls button,
+.remove-btn,
+.checkout-btn {
+  transition: all 0.3s ease;
+}
+
+/* Improve touch targets for mobile */
+@media (hover: none) {
+  .quantity-controls button,
+  .remove-btn,
+  .checkout-btn {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 </style> 

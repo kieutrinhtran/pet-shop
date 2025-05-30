@@ -241,6 +241,7 @@ export default {
   justify-content: center;
   margin-bottom: 8px;
   font-weight: bold;
+  font-size: 1rem;
 }
 
 .step.active .step-number {
@@ -320,6 +321,7 @@ export default {
 .form-group label {
   font-weight: 500;
   color: #666;
+  font-size: 1em;
 }
 
 .form-input {
@@ -410,11 +412,13 @@ export default {
 
 .method-name {
   font-weight: 500;
+  font-size: 1.06rem;
 }
 
 .method-price {
   color: #f90;
   font-weight: 600;
+  font-size: 1rem;
 }
 
 .order-summary {
@@ -443,7 +447,7 @@ export default {
   border: none;
   border-radius: 8px;
   padding: 12px;
-  font-size: 1.1em;
+  font-size: 1.125rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -461,26 +465,133 @@ export default {
   cursor: not-allowed;
 }
 
+/* Tablet (768px) */
 @media (max-width: 768px) {
   .shipping-page {
-    padding: 16px;
-    margin: 16px;
+    padding: 20px;
   }
 
-  .checkout-steps {
+  .shipping-container {
     flex-direction: column;
-    gap: 16px;
+    gap: 30px;
   }
 
-  .step-line {
-    width: 2px;
-    height: 40px;
+  .shipping-form {
+    width: 100%;
   }
 
-  .method-info {
+  .form-row {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+    gap: 15px;
   }
+
+  .form-group {
+    width: 100%;
+  }
+
+  .shipping-summary {
+    width: 100%;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    z-index: 10;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  }
+
+  .shipping-methods {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile (480px) */
+@media (max-width: 480px) {
+  .shipping-page {
+    padding: 15px;
+  }
+
+  .shipping-page h1 {
+    font-size: 1.5rem;
+  }
+
+  .shipping-container {
+    gap: 20px;
+  }
+
+  .form-group label {
+    font-size: 0.88rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    font-size: 0.88rem;
+    padding: 8px 12px;
+  }
+
+  .shipping-methods {
+    grid-template-columns: 1fr;
+  }
+
+  .shipping-method {
+    padding: 12px;
+  }
+
+  .shipping-method label {
+    font-size: 0.88rem;
+  }
+
+  .shipping-summary {
+    padding: 15px;
+  }
+
+  .summary-item {
+    font-size: 0.88rem;
+  }
+
+  .continue-btn {
+    padding: 12px;
+    font-size: 1rem;
+  }
+}
+
+/* Add smooth transitions */
+.shipping-container,
+.form-group input,
+.form-group select,
+.shipping-method,
+.continue-btn {
+  transition: all 0.3s ease;
+}
+
+/* Improve touch targets for mobile */
+@media (hover: none) {
+  .form-group input,
+  .form-group select,
+  .shipping-method,
+  .continue-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+.shipping-page h1 {
+  font-size: clamp(1.25rem, 4vw, 2rem);
+}
+.step-number {
+  font-size: 1rem;
+}
+.address-section h3, .shipping-method h3, .order-summary h3 {
+  font-size: 1.25rem;
+}
+.method-name {
+  font-size: 1.06rem;
+}
+.method-price {
+  font-size: 1rem;
+}
+.next-btn {
+  font-size: 1.125rem;
+}
+.summary-row.total span:last-child {
+  font-size: 1.25rem;
 }
 </style> 

@@ -42,7 +42,12 @@ export default {
   box-sizing: border-box;
 }
 
+html {
+  font-size: clamp(14px, 2vw, 18px);
+}
+
 body {
   font-family: 'Inter', Arial, sans-serif;
+  font-size: 1rem;
 }
 </style> 

@@ -19,3 +19,21 @@
     @apply bg-white rounded-lg shadow-md p-6;
   }
 } 
+
+html {
+  font-size: clamp(14px, 2vw, 18px);
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+} 
+
+h1 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+h2 {
+  font-size: clamp(1.3rem, 3vw, 2rem);
+}
+p, li, button, input, label {
+  font-size: 1rem;
+} 

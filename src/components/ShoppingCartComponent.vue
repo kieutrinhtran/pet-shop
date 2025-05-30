@@ -204,8 +204,109 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .shopping-cart {
+    padding: 15px;
+  }
+
   .cart-content {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cart-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .item-image {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+  }
+
+  .item-details {
+    width: 100%;
+  }
+
+  .quantity-controls {
+    justify-content: center;
+  }
+
+  .remove-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .cart-summary {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    z-index: 10;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  }
+}
+
+@media (max-width: 480px) {
+  .shopping-cart {
+    padding: 10px;
+  }
+
+  .shopping-cart h2 {
+    font-size: 20px;
+  }
+
+  .cart-item {
+    padding: 10px 0;
+  }
+
+  .item-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .item-details h3 {
+    font-size: 16px;
+  }
+
+  .price {
+    font-size: 15px;
+  }
+
+  .quantity-controls button {
+    width: 25px;
+    height: 25px;
+  }
+
+  .cart-summary {
+    padding: 15px;
+  }
+
+  .summary-item {
+    font-size: 14px;
+  }
+
+  .checkout-btn {
+    padding: 12px;
+    font-size: 16px;
+  }
+}
+
+.shopping-cart,
+.cart-item,
+.cart-summary,
+.quantity-controls button,
+.remove-btn,
+.checkout-btn {
+  transition: all 0.3s ease;
+}
+
+@media (hover: none) {
+  .quantity-controls button,
+  .remove-btn,
+  .checkout-btn {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 </style> 

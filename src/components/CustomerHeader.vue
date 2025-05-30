@@ -56,7 +56,7 @@
 import { useCartStore } from '../store/cart'
 
 export default {
-  name: 'HeaderComponent',
+  name: 'CustomerHeader',
   data() {
     return {
       searchQuery: '',

@@ -12,73 +12,102 @@ import LoginSuccess from '../views/LoginSuccess.vue'
 import RegisterSuccess from '../views/RegisterSuccess.vue'
 import HomePage from '../views/HomePage.vue'
 import AdminOrderManagement from '../views/AdminOrderManagement.vue'
+import AdminLogin from '@/views/AdminLogin.vue'
+import AdminLayout from '@/layouts/AdminLayout.vue'
+import CustomerLayout from '@/layouts/CustomerLayout.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'HomePage',
-    component: HomePage
+    component: CustomerLayout,
+    children: [
+      {
+        path: '',
+        name: 'HomePage',
+        component: HomePage
+      },
+      {
+        path: 'products',
+        name: 'ProductsList',
+        component: ProductsList
+      },
+      {
+        path: 'products/:id',
+        name: 'ProductDetail',
+        component: ProductDetail,
+        props: true
+      },
+      {
+        path: 'cart',
+        name: 'CartPage',
+        component: CartPage
+      },
+      {
+        path: 'shipping',
+        name: 'ShippingPage',
+        component: ShippingPage
+      },
+      {
+        path: 'checkout',
+        name: 'CheckoutPage',
+        component: CheckoutPage
+      },
+      {
+        path: 'order-success',
+        name: 'OrderSuccess',
+        component: OrderSuccess
+      },
+      {
+        path: 'about',
+        name: 'AboutPage',
+        component: AboutPage
+      },
+      {
+        path: 'login',
+        name: 'LoginPage',
+        component: LoginPage
+      },
+      {
+        path: 'register',
+        name: 'RegisterPage',
+        component: RegisterPage
+      },
+      {
+        path: 'login-success',
+        name: 'LoginSuccess',
+        component: LoginSuccess
+      },
+      {
+        path: 'register-success',
+        name: 'RegisterSuccess',
+        component: RegisterSuccess
+      }
+    ]
   },
   {
-    path: '/products',
-    name: 'ProductsList',
-    component: ProductsList
+    path: '/admin',
+    component: AdminLayout,
+    children: [
+      {
+        path: '',
+        redirect: '/admin/login'
+      },
+      {
+        path: 'orders',
+        name: 'AdminOrderManagement',
+        component: AdminOrderManagement
+      },
+      {
+        path: 'statistics',
+        name: 'AdminStatistics',
+        component: () => import('@/views/AdminStatistics.vue')
+      },
+    ]
   },
   {
-    path: '/products/:id',
-    name: 'ProductDetail',
-    component: ProductDetail,
-    props: true
-  },
-  {
-    path: '/cart',
-    name: 'CartPage',
-    component: CartPage
-  },
-  {
-    path: '/shipping',
-    name: 'ShippingPage',
-    component: ShippingPage
-  },
-  {
-    path: '/checkout',
-    name: 'CheckoutPage',
-    component: CheckoutPage
-  },
-  {
-    path: '/order-success',
-    name: 'OrderSuccess',
-    component: OrderSuccess
-  },
-  {
-    path: '/about',
-    name: 'AboutPage',
-    component: AboutPage
-  },
-  {
-    path: '/login',
-    name: 'LoginPage',
-    component: LoginPage
-  },
-  {
-    path: '/register',
-    name: 'RegisterPage',
-    component: RegisterPage
-  },
-  {
-    path: '/login-success',
-    name: 'LoginSuccess',
-    component: LoginSuccess
-  },
-  {
-    path: '/register-success',
-    name: 'RegisterSuccess',
-    component: RegisterSuccess
-  },
-  {
-    path: '/admin/orders',
-    name: 'AdminOrderManagement',
-    component: AdminOrderManagement
+    path: '/admin/login',
+    name: 'AdminLogin',
+    component: AdminLogin
   },
   {
     path: '/:pathMatch(.*)*',

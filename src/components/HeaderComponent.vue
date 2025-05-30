@@ -25,11 +25,18 @@
         <span class="logo-text">Pet World</span>
       </div>
       <ul class="navbar-menu">
-        <li class="active"><a href="#">Pet World</a></li>
-        <li><a href="#">Trang chủ</a></li>
-        <li><a href="#">Sản phẩm</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Về chúng tôi</a></li>
+        <li :class="{ active: isHome }">
+          <router-link to="/">Pet World</router-link>
+        </li>
+        <li :class="{ active: isHome }">
+          <router-link to="/">Trang chủ</router-link>
+        </li>
+        <li :class="{ active: isProducts }">
+          <router-link to="/products">Sản phẩm</router-link>
+        </li>
+        <li :class="{ active: isAbout }">
+          <router-link to="/about">Về chúng tôi</router-link>
+        </li>
       </ul>
       <div class="navbar-search-icons">
         <div class="search-box">
@@ -51,7 +58,18 @@
 
 <script>
 export default {
-  name: 'HeaderComponent'
+  name: 'HeaderComponent',
+  computed: {
+    isHome() {
+      return this.$route.path === '/';
+    },
+    isProducts() {
+      return this.$route.path.startsWith('/products');
+    },
+    isAbout() {
+      return this.$route.path === '/about';
+    }
+  }
 }
 </script>
 

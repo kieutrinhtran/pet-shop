@@ -1,30 +1,5 @@
 <template>
   <div class="homepage">
-    <!-- HeaderBar -->
-    <header class="header-bar">
-      <div class="header-top">
-        <span><i class="fas fa-phone"></i> +84 123 456 789</span>
-        <span><i class="fas fa-envelope"></i> wearpet@petshop.com</span>
-        <span><i class="fas fa-map-marker-alt"></i> 123 Lý Thường Kiệt, Quận 10, TP.HCM</span>
-        <span class="header-user"><i class="fas fa-user-circle"></i> Nguyễn Văn A</span>
-      </div>
-      <nav class="header-nav">
-        <img src="/images/logo.png" alt="Pet Shop Logo" class="logo" />
-        <router-link to="/">Pet World</router-link>
-        <router-link to="/">Trang chủ</router-link>
-        <router-link to="/products">Sản phẩm</router-link>
-        <router-link to="/about">Về chúng tôi</router-link>
-        <div class="search-bar">
-          <input type="text" placeholder="Tìm kiếm sản phẩm" />
-          <button><i class="fas fa-search"></i></button>
-        </div>
-        <router-link to="/cart" class="cart-link">
-          <i class="fas fa-shopping-cart"></i>
-        </router-link>
-        <span class="header-user-mobile"><i class="fas fa-user-circle"></i></span>
-      </nav>
-    </header>
-
     <!-- BannerSection -->
     <section class="banner-section">
       <div class="banner-content">
@@ -122,25 +97,6 @@
         </div>
       </div>
     </section>
-
-    <!-- FooterBar -->
-    <footer class="footer-bar">
-      <div class="footer-content">
-        <div class="footer-logo">
-          <img src="/images/logo.png" alt="Pet Shop Logo" />
-          <p>Chúng tôi không chỉ phục vụ thú cưng mà còn đồng hành cùng bạn trên hành trình yêu thương chúng.</p>
-        </div>
-        <div class="footer-info">
-          <h4>Store</h4>
-          <p>123 Lý Thường Kiệt, Phường 3, Quận 10, Thành phố Hồ Chí Minh</p>
-          <p>+84 123 456 789</p>
-          <p>wearpet@petshop.com</p>
-        </div>
-      </div>
-      <div class="footer-copyright">
-        &copy; Copyright Pet Shop 2023
-      </div>
-    </footer>
   </div>
 </template>
 
@@ -195,17 +151,10 @@ export default {
 .store-item { text-align: center; }
 .store-item img { width: 180px; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
 
-.footer-bar { background: #fff; border-top: 1px solid #eee; padding: 32px 0 0 0; }
-.footer-content { display: flex; justify-content: space-between; padding: 0 32px 24px 32px; }
-.footer-logo img { height: 48px; margin-bottom: 8px; }
-.footer-info { max-width: 300px; }
-.footer-copyright { text-align: center; color: #aaa; padding: 12px 0; font-size: 0.95em; }
-
 @media (max-width: 900px) {
   .banner-section { flex-direction: column; align-items: flex-start; }
   .banner-img { max-width: 100%; margin-top: 24px; }
   .banner-content { max-width: 100%; }
-  .footer-content { flex-direction: column; gap: 24px; }
   .product-category-list, .bestseller-list, .store-list { flex-direction: column; gap: 16px; }
 }
 </style> 

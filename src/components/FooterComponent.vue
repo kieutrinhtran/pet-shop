@@ -5,7 +5,7 @@
       <div class="footer-col col-logo">
         <div class="footer-logo">
           <i class="fas fa-paw"></i>
-          <span>Pet Shop</span>
+          <span>Pet World</span>
         </div>
         <div class="footer-desc">
           Chúng tôi không chỉ phục vụ thú cưng – mà còn đồng hành cùng bạn trên hành trình yêu thương chúng.
@@ -13,7 +13,7 @@
       </div>
       <!-- Cột 2: Pet Shop -->
       <div class="footer-col">
-        <div class="footer-title">Pet Shop</div>
+        <div class="footer-title">Pet World</div>
         <ul>
           <li>About us</li>
           <li>Gift cards</li>
@@ -41,7 +41,7 @@
     <!-- Dòng logo thanh toán -->
     <div class="footer-bottom">
       <div class="footer-copyright">
-        © Copyright Pet Shop 2025
+        © Copyright Pet World 2025
       </div>
       <div class="footer-payments">
         <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="VISA" />

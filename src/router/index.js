@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import ProductsList from '../components/ProductsList.vue'
-import ProductDetail from '../components/ProductDetail.vue'
-import CartPage from '../components/CartPage.vue'
-import ShippingPage from '../components/ShippingPage.vue'
-import CheckoutPage from '../components/CheckoutPage.vue'
-import OrderSuccess from '../components/OrderSuccess.vue'
-import AboutPage from '../components/AboutPage.vue'
-import LoginPage from '../components/LoginPage.vue'
-import RegisterPage from '../components/RegisterPage.vue'
-import LoginSuccess from '../components/LoginSuccess.vue'
-import RegisterSuccess from '../components/RegisterSuccess.vue'
-import HomePage from '../components/HomePage.vue'
-import AdminOrderManagement from '../components/AdminOrderManagement.vue'
+import ProductsList from '../views/ProductsList.vue'
+import ProductDetail from '../views/ProductDetail.vue'
+import CartPage from '../views/CartPage.vue'
+import ShippingPage from '../views/ShippingPage.vue'
+import CheckoutPage from '../views/CheckoutPage.vue'
+import OrderSuccess from '../views/OrderSuccess.vue'
+import AboutPage from '../views/AboutPage.vue'
+import LoginPage from '../views/LoginPage.vue'
+import RegisterPage from '../views/RegisterPage.vue'
+import LoginSuccess from '../views/LoginSuccess.vue'
+import RegisterSuccess from '../views/RegisterSuccess.vue'
+import HomePage from '../views/HomePage.vue'
+import AdminOrderManagement from '../views/AdminOrderManagement.vue'
 
 const routes = [
   {
@@ -83,7 +83,7 @@ const routes = [
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: () => import('../components/NotFound.vue')
+    component: () => import('../views/NotFound.vue')
   }
 ]
 

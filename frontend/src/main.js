@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import App from "./App.vue";
+import AdminOrderManagement from "./views/admin/AdminOrderManagement.vue";
 import "./assets/styles/global.css";
 
-createApp(App).mount("#app");
+createApp(AdminOrderManagement).mount("#app");

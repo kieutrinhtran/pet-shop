@@ -1,0 +1,290 @@
+<template>
+  <div class="homepage">
+    <!-- BannerSection -->
+    <section class="banner-section">
+      <div class="banner-content">
+        <span class="brand">Pet World</span>
+        <h1>Thiên đường mua sắm dành cho thú cưng!</h1>
+        <p class="slogan">Dịch vụ tận tâm – Trải nghiệm mua sắm độc đáo!</p>
+        <div class="cta-buttons">
+          <router-link to="/products" class="cta-btn primary">Mua ngay</router-link>
+        </div>
+      </div>
+      <div class="banner-img">
+        <div class="hero-bg"></div>
+        <img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=600&q=80" alt="Dog and Cat" />
+        <span class="bird-icon">🕊️</span>
+        <div class="paw-prints"></div>
+      </div>
+    </section>
+
+    <!-- QuickCategorySection -->
+    <section class="quick-category-section">
+      <div class="quick-category">
+        <img src="/images/dog-category.jpg" alt="Dog" />
+        <span>Mua sắm cho cún</span>
+      </div>
+      <div class="quick-category">
+        <img src="/images/cat-category.jpg" alt="Cat" />
+        <span>Mua sắm cho mèo</span>
+      </div>
+    </section>
+
+    <!-- ProductCategorySection -->
+    <section class="product-category-section">
+      <h2>Danh mục sản phẩm</h2>
+      <div class="product-category-list">
+        <div class="product-category-item">
+          <img src="/images/fashion.jpg" alt="Quần áo/Thời trang" />
+          <span>Quần áo/Thời trang</span>
+        </div>
+        <div class="product-category-item">
+          <img src="/images/food.jpg" alt="Thức ăn" />
+          <span>Thức ăn</span>
+        </div>
+        <div class="product-category-item">
+          <img src="/images/care.jpg" alt="Phụ kiện chăm sóc" />
+          <span>Phụ kiện chăm sóc</span>
+        </div>
+        <div class="product-category-item">
+          <img src="/images/clean.jpg" alt="Vật dụng vệ sinh" />
+          <span>Vật dụng vệ sinh</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BestSellerSection -->
+    <section class="bestseller-section">
+      <h2>Các sản phẩm bán chạy</h2>
+      <div class="bestseller-list">
+        <div class="bestseller-item">
+          <img src="/images/royal-canin-chihuahua.jpg" alt="Royal Canin Chihuahua" />
+          <span>Chihuahua Puppy</span>
+          <span>300.000đ</span>
+        </div>
+        <div class="bestseller-item">
+          <img src="/images/royal-canin-hairskin.jpg" alt="Royal Canin Hair & Skin" />
+          <span>Royal Canin Hair & Skin</span>
+          <span>300.000đ</span>
+        </div>
+        <div class="bestseller-item">
+          <img src="/images/pedigree-adult.jpg" alt="Pedigree Adult" />
+          <span>Pedigree - Vị bò và rau củ</span>
+          <span>300.000đ</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BrandSection -->
+    <section class="brand-section">
+      <h2>1000+ Thương Hiệu Boss Thích</h2>
+      <div class="brand-list">
+        <img src="/images/brand-royalcanin.png" alt="Royal Canin" />
+        <img src="/images/brand-hi-raw.png" alt="Hi Raw" />
+        <img src="/images/brand-equilibrio.png" alt="Equilibrio" />
+        <!-- ... thêm các logo khác ... -->
+      </div>
+    </section>
+
+    <!-- StoreSection -->
+    <section class="store-section">
+      <h2>Mua Trực Tiếp Tại Cửa Hàng</h2>
+      <div class="store-list">
+        <div class="store-item">
+          <img src="/images/store-1.jpg" alt="Store 1" />
+          <span>Pet World - Lý Thường Kiệt</span>
+        </div>
+        <div class="store-item">
+          <img src="/images/store-2.jpg" alt="Store 2" />
+          <span>Pet World - Nguyễn Tri Phương</span>
+        </div>
+        <div class="store-item">
+          <img src="/images/store-3.jpg" alt="Store 3" />
+          <span>Pet World - Nguyễn Văn Linh</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'HomePage'
+}
+</script>
+
+<style scoped>
+/* Thêm CSS layout cơ bản, bạn có thể tuỳ chỉnh thêm */
+.homepage { background: #fafafa; }
+.header-bar { background: #fff; border-bottom: 1px solid #eee; }
+.header-top { display: flex; justify-content: space-between; padding: 8px 32px; font-size: 0.95em; color: #333; }
+.header-user { color: #f90; }
+.header-nav { display: flex; align-items: center; gap: 24px; padding: 12px 32px; }
+.logo { height: 48px; margin-right: 16px; }
+.search-bar { display: flex; align-items: center; }
+.search-bar input { padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px 0 0 4px; }
+.search-bar button { padding: 6px 10px; border: none; background: #f90; color: #fff; border-radius: 0 4px 4px 0; }
+.cart-link { position: relative; }
+.header-user-mobile { display: none; }
+
+.banner-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 40px;
+  margin-top: 32px;
+  min-height: 420px;
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.04);
+}
+
+.banner-content {
+  flex: 1;
+  z-index: 2;
+}
+
+.brand {
+  color: #ff9000;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.banner-content h1 {
+  font-size: 38px;
+  font-weight: 800;
+  margin: 12px 0 18px 0;
+  line-height: 1.2;
+  color: #222;
+}
+
+.slogan {
+  color: #555;
+  font-size: 17px;
+  margin-bottom: 32px;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.cta-btn {
+  padding: 14px 38px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta-btn.primary {
+  background: #111;
+  color: #fff;
+}
+
+.cta-btn.primary:hover {
+  background: #ff9000;
+  transform: translateY(-2px);
+}
+
+.banner-img {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 350px;
+  min-height: 350px;
+}
+
+.hero-bg {
+  position: absolute;
+  right: 0;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle at 60% 40%, #ff9000 70%, #fff0 100%);
+  border-radius: 60% 40% 60% 40% / 50% 60% 40% 50%;
+  z-index: 1;
+  opacity: 0.95;
+}
+
+.banner-img img {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  object-fit: cover;
+  border-radius: 40% 60% 50% 50% / 60% 40% 60% 40%;
+  z-index: 2;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.10);
+}
+
+.bird-icon {
+  position: absolute;
+  left: 30px;
+  top: 30px;
+  font-size: 60px;
+  color: #ccc;
+  opacity: 0.5;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.paw-prints {
+  position: absolute;
+  right: 80px;
+  top: 80px;
+  width: 180px;
+  height: 180px;
+  z-index: 3;
+  pointer-events: none;
+  background: url('data:image/svg+xml;utf8,<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="20" cy="20" rx="8" ry="12" fill="%23fff6" /><ellipse cx="60" cy="20" rx="8" ry="12" fill="%23fff6" /><ellipse cx="30" cy="50" rx="10" ry="14" fill="%23fff6" /><ellipse cx="50" cy="50" rx="10" ry="14" fill="%23fff6" /></svg>');
+  opacity: 0.3;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.quick-category-section { display: flex; gap: 24px; justify-content: center; margin: 32px 0; }
+.quick-category { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 16px 32px; text-align: center; cursor: pointer; }
+.quick-category img { width: 120px; height: 80px; object-fit: cover; border-radius: 8px; }
+
+.product-category-section { background: #fff; border-radius: 16px; padding: 32px; margin-bottom: 24px; }
+.product-category-list { display: flex; gap: 32px; justify-content: center; }
+.product-category-item { text-align: center; }
+.product-category-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
+
+.bestseller-section { background: #fff; border-radius: 16px; padding: 32px; margin-bottom: 24px; }
+.bestseller-list { display: flex; gap: 32px; justify-content: center; }
+.bestseller-item { text-align: center; }
+.bestseller-item img { width: 120px; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
+
+.brand-section { background: #fff; border-radius: 16px; padding: 32px; margin-bottom: 24px; }
+.brand-list { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+.brand-list img { width: 100px; height: 40px; object-fit: contain; margin-bottom: 8px; }
+
+.store-section { background: #fff; border-radius: 16px; padding: 32px; margin-bottom: 24px; }
+.store-list { display: flex; gap: 32px; justify-content: center; }
+.store-item { text-align: center; }
+.store-item img { width: 180px; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
+
+@media (max-width: 900px) {
+  .banner-section {
+    flex-direction: column;
+    margin: 0 10px;
+    padding: 18px;
+  }
+  .banner-img {
+    margin-top: 24px;
+  }
+  .banner-content {
+    max-width: 100%;
+  }
+  .product-category-list, .bestseller-list, .store-list { flex-direction: column; gap: 16px; }
+}
+</style> 

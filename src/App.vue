@@ -1,26 +1,48 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="min-h-screen flex flex-col">
+    <HeaderComponent />
+    <main class="flex-grow">
+      <router-view></router-view>
+    </main>
+    <FooterComponent />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { useCartStore } from './store/cart'
+import HeaderComponent from './components/HeaderComponent.vue'
+import FooterComponent from './components/FooterComponent.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HeaderComponent,
+    FooterComponent
+  },
+  setup() {
+    const cart = useCartStore()
+    return {
+      cart
+    }
+  },
+  computed: {
+    cartItemCount() {
+      return this.cart.itemCount
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-</style>
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+}
+</style> 

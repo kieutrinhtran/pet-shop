@@ -56,7 +56,7 @@
 import { useCartStore } from '../store/cart'
 
 export default {
-  name: 'HeaderComponent',
+  name: 'CustomerHeader',
   data() {
     return {
       searchQuery: '',
@@ -107,7 +107,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #222;
   padding: 10px 40px 0 40px;
 }
@@ -138,7 +138,7 @@ nav {
 }
 nav .font-bold {
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
 }
 nav ul {
   display: flex;
@@ -185,7 +185,7 @@ nav .flex.items-center {
   border-radius: 999px;
   border: none;
   background: #f5f5f5;
-  font-size: 15px;
+  font-size: 0.94rem;
   outline: none;
   color: #222;
 }
@@ -223,7 +223,7 @@ nav .flex.items-center {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 0.81rem;
   font-weight: bold;
   border: 2px solid #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,0.07);
@@ -239,6 +239,106 @@ nav .flex.items-center {
   }
   nav ul {
     gap: 18px;
+  }
+}
+
+/* Tablet (768px) */
+@media (max-width: 768px) {
+  .header {
+    padding: 10px 20px;
+  }
+
+  .logo {
+    font-size: clamp(1.1rem, 4vw, 1.25rem);
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  .mobile-menu.active {
+    transform: translateX(0);
+  }
+
+  .mobile-menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .mobile-menu-links a {
+    font-size: 1.125rem;
+    padding: 10px 0;
+  }
+
+  .search-bar {
+    width: 200px;
+  }
+
+  .search-bar input {
+    font-size: 0.88rem;
+  }
+
+  .cart-icon {
+    font-size: 1.25rem;
+  }
+}
+
+/* Mobile (480px) */
+@media (max-width: 480px) {
+  .header {
+    padding: 8px 15px;
+  }
+
+  .logo {
+    font-size: 1.125rem;
+  }
+
+  .search-bar {
+    width: 150px;
+  }
+
+  .search-bar input {
+    font-size: 0.81rem;
+    padding: 6px 10px;
+  }
+
+  .cart-icon {
+    font-size: 1.125rem;
+  }
+
+  .mobile-menu {
+    width: 100%;
+  }
+
+  .mobile-menu-links a {
+    font-size: 1rem;
+  }
+}
+
+/* Add smooth transitions */
+.header,
+.mobile-menu,
+.search-bar,
+.cart-icon {
+  transition: all 0.3s ease;
+}
+
+/* Improve touch targets for mobile */
+@media (hover: none) {
+  .mobile-menu-btn,
+  .cart-icon,
+  .mobile-menu-links a {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 </style>

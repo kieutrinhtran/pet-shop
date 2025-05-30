@@ -5,40 +5,48 @@
 ## Cấu trúc Dự án
 
 ```
-pet-shop/
+pet-world/
 ├── src/
-│   ├── assets/                  # Tài nguyên tĩnh (ảnh, font, ...)
-│   ├── components/              # Các component dùng lại nhiều nơi
-│   │   ├── HeaderComponent.vue      # Header (dùng toàn site)
-│   │   ├── FooterComponent.vue      # Footer (dùng toàn site)
-│   │   └── ShoppingCartComponent.vue# Component giỏ hàng nhỏ
-│   ├── views/                   # Các trang chính (page)
-│   │   ├── AboutPage.vue            # Trang Giới thiệu
-│   │   ├── AdminOrderManagement.vue # Trang Quản lý đơn hàng (Admin)
-│   │   ├── CartPage.vue             # Trang Giỏ hàng
-│   │   ├── CheckoutPage.vue         # Trang Thanh toán
-│   │   ├── HomePage.vue             # Trang Chủ
-│   │   ├── LoginPage.vue            # Trang Đăng nhập
-│   │   ├── LoginSuccess.vue         # Trang Đăng nhập thành công
-│   │   ├── OrderSuccess.vue         # Trang Đặt hàng thành công
-│   │   ├── ProductDetail.vue        # Trang Chi tiết sản phẩm
-│   │   ├── ProductsList.vue         # Trang Danh sách sản phẩm
-│   │   ├── RegisterPage.vue         # Trang Đăng ký
-│   │   ├── RegisterSuccess.vue      # Trang Đăng ký thành công
-│   │   ├── ShippingPage.vue         # Trang Vận chuyển
-│   │   └── NotFound.vue             # Trang 404
-│   ├── data/                    # Dữ liệu mẫu, hằng số
-│   ├── router/                  # Cấu hình Vue Router
-│   ├── services/                # Gọi API, service
-│   ├── store/                   # Quản lý state (Pinia/Vuex)
-│   ├── utils/                   # Hàm tiện ích
-│   ├── App.vue                  # Component gốc
-│   └── main.js                  # Điểm khởi đầu ứng dụng
-├── public/                      # File tĩnh công khai
-├── backend/                     # Máy chủ API (nếu có)
-├── package.json                 # Các dependency của dự án
-├── vue.config.js                # Cấu hình Vue CLI
-└── README.md                    # Tài liệu dự án
+│   ├── assets/                  # Chứa tài nguyên tĩnh như ảnh, font, icon...
+│   ├── components/              # Các component tái sử dụng nhiều nơi trong app
+│   │   ├── AdminHeader.vue          # Header cho giao diện admin
+│   │   ├── CustomerHeader.vue       # Header cho giao diện khách hàng
+│   │   ├── FooterComponent.vue      # Chân trang dùng toàn site
+│   │   ├── BasePagination.vue       # Component phân trang dùng lại cho nhiều trang
+│   │   └── ShoppingCartComponent.vue# Hiển thị giỏ hàng nhỏ (mini cart)
+│   ├── layouts/                # Các layout tổng thể cho từng loại trang
+│   │   ├── AdminLayout.vue         # Layout cho các trang admin (có header, footer riêng)
+│   │   └── CustomerLayout.vue      # Layout cho các trang khách hàng (header, footer riêng)
+│   ├── views/                   # Các trang chính (page) của ứng dụng
+│   │   ├── AboutPage.vue            # Trang giới thiệu về shop
+│   │   ├── AdminOrderManagement.vue # Trang quản lý đơn hàng (admin)
+│   │   ├── AdminStatistics.vue      # Trang thống kê, dashboard (admin)
+│   │   ├── CartPage.vue             # Trang giỏ hàng
+│   │   ├── CheckoutPage.vue         # Trang thanh toán
+│   │   ├── HomePage.vue             # Trang chủ
+│   │   ├── LoginPage.vue            # Trang đăng nhập khách hàng
+│   │   ├── LoginSuccess.vue         # Trang thông báo đăng nhập thành công
+│   │   ├── OrderSuccess.vue         # Trang thông báo đặt hàng thành công
+│   │   ├── ProductDetail.vue        # Trang chi tiết sản phẩm
+│   │   ├── ProductsList.vue         # Trang danh sách sản phẩm
+│   │   ├── RegisterPage.vue         # Trang đăng ký tài khoản khách hàng
+│   │   ├── RegisterSuccess.vue      # Trang thông báo đăng ký thành công
+│   │   ├── ShippingPage.vue         # Trang nhập thông tin vận chuyển
+│   │   ├── NotFound.vue             # Trang 404 khi không tìm thấy đường dẫn
+│   │   └── AdminLogin.vue           # Trang đăng nhập dành cho admin
+│   ├── data/                    # Chứa dữ liệu mẫu, hằng số (nếu có)
+│   ├── router/                  # Cấu hình router (điều hướng các trang)
+│   │   └── index.js                 # Định nghĩa các route, layout, children route
+│   ├── services/                # Chứa các hàm gọi API, xử lý dữ liệu (nếu có)
+│   ├── store/                   # Quản lý state toàn cục (Pinia/Vuex)
+│   │   └── index.js
+│   ├── App.vue                  # Component gốc, nơi mount toàn bộ ứng dụng
+│   └── main.js                  # File khởi tạo Vue app, khai báo router, store, global style
+├── public/                      # File tĩnh công khai (index.html, favicon, ảnh dùng trực tiếp)
+├── backend/                     # Máy chủ API (nếu có, thường cho backend NodeJS, Laravel...)
+├── package.json                 # Danh sách dependency, script, metadata của dự án
+├── vue.config.js                # Cấu hình bổ sung cho Vue CLI (proxy, build, ...)
+└── README.md                    # Tài liệu hướng dẫn dự án (file này)
 ```
 
 ## Tính năng

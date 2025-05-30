@@ -264,6 +264,7 @@ export default {
   justify-content: center;
   margin-bottom: 8px;
   font-weight: bold;
+  font-size: 1rem;
 }
 
 .step.active .step-number {
@@ -343,6 +344,7 @@ export default {
 .method-name {
   font-weight: 500;
   margin-bottom: 4px;
+  font-size: 1.06rem;
 }
 
 .method-description {
@@ -426,11 +428,13 @@ export default {
   padding: 4px 8px;
   border-radius: 4px;
   font-weight: 500;
+  font-size: 1rem;
 }
 
 .discount-amount {
   color: #22c55e;
   font-weight: 600;
+  font-size: 1rem;
 }
 
 .remove-discount {
@@ -453,7 +457,7 @@ export default {
   border: none;
   border-radius: 8px;
   padding: 16px;
-  font-size: 1.1em;
+  font-size: 1.125rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -537,33 +541,119 @@ export default {
   border-top: 1px solid #ddd;
 }
 
+.checkout-page h1 {
+  font-size: clamp(1.25rem, 4vw, 2rem);
+}
+
+.section-card h3, .order-summary h3 {
+  font-size: 1.25rem;
+}
+
+/* Tablet (768px) */
 @media (max-width: 768px) {
   .checkout-page {
-    padding: 16px;
-    margin: 16px;
+    padding: 20px;
   }
 
-  .checkout-content {
+  .checkout-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .checkout-form {
+    width: 100%;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+
+  .order-summary {
+    width: 100%;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    z-index: 10;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  }
+
+  .payment-methods {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile (480px) */
+@media (max-width: 480px) {
+  .checkout-page {
+    padding: 15px;
+  }
+
+  .checkout-page h1 {
+    font-size: 1.5rem;
+  }
+
+  .checkout-container {
+    gap: 20px;
+  }
+
+  .form-group label {
+    font-size: 0.88rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    font-size: 0.88rem;
+    padding: 8px 12px;
+  }
+
+  .payment-methods {
     grid-template-columns: 1fr;
   }
 
-  .checkout-steps {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .step-line {
-    width: 2px;
-    height: 40px;
-  }
-
   .payment-method {
-    flex-direction: column;
-    text-align: center;
+    padding: 12px;
   }
 
-  .method-info {
-    flex-direction: column;
+  .payment-method label {
+    font-size: 0.88rem;
+  }
+
+  .order-summary {
+    padding: 15px;
+  }
+
+  .summary-item {
+    font-size: 0.88rem;
+  }
+
+  .place-order-btn {
+    padding: 12px;
+    font-size: 1rem;
+  }
+}
+
+/* Add smooth transitions */
+.checkout-container,
+.form-group input,
+.form-group select,
+.payment-method,
+.place-order-btn {
+  transition: all 0.3s ease;
+}
+
+/* Improve touch targets for mobile */
+@media (hover: none) {
+  .form-group input,
+  .form-group select,
+  .payment-method,
+  .place-order-btn {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 </style> 

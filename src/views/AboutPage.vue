@@ -62,50 +62,30 @@
         <span class="testimonial-label">Chứng Thực</span>
         <h3>Khách hàng nói gì về chúng tôi?</h3>
         <div class="testimonial-slider">
-          <div class="testimonial-quote active">
+          <div v-for="(quote, index) in testimonials" 
+               :key="index" 
+               :ref="el => { if (el) testimonialRefs[index] = el }"
+               class="testimonial-quote"
+               :class="{ active: currentTestimonial === index }">
             <div class="quote-icon">❝</div>
-            <p>
-              <b>Pet World thực sự là thiên đường cho thú cưng!</b> Tôi đã tìm thấy mọi thứ mình cần cho bé cún của mình, từ thức ăn, phụ kiện đến dịch vụ spa. Đội ngũ nhân viên rất nhiệt tình tư vấn và cũng chuyên nghiệp!
-            </p>
+            <p v-html="quote.text"></p>
             <div class="testimonial-author">
-              <img src="https://media.vneconomy.vn/w800/images/upload/2023/11/17/ong-pham-nhat-vuong.jpg" alt="Phạm Nhật Vượng" />
+              <img :src="quote.author.image" :alt="quote.author.name" />
               <div>
-                <b>Phạm Nhật Vượng</b>
-                <span>Khách hàng</span>
-              </div>
-            </div>
-          </div>
-          <div class="testimonial-quote">
-            <div class="quote-icon">❝</div>
-            <p>
-              <b>Dịch vụ tuyệt vời!</b> Tôi rất ấn tượng với sự chuyên nghiệp và tận tâm của đội ngũ Pet World. Các sản phẩm đều chất lượng và giá cả hợp lý.
-            </p>
-            <div class="testimonial-author">
-              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="Nguyễn Thị A" />
-              <div>
-                <b>Nguyễn Thị A</b>
-                <span>Khách hàng thân thiết</span>
-              </div>
-            </div>
-          </div>
-          <div class="testimonial-quote">
-            <div class="quote-icon">❝</div>
-            <p>
-              <b>Mèo nhà tôi rất thích!</b> Thức ăn và đồ chơi từ Pet World luôn là lựa chọn hàng đầu của tôi. Giao hàng nhanh chóng và đóng gói cẩn thận.
-            </p>
-            <div class="testimonial-author">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Trần Văn B" />
-              <div>
-                <b>Trần Văn B</b>
-                <span>Khách hàng</span>
+                <b>{{ quote.author.name }}</b>
+                <span>{{ quote.author.title }}</span>
               </div>
             </div>
           </div>
         </div>
         <div class="testimonial-dots">
-          <span class="dot active"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
+          <span v-for="(dot, index) in testimonials" 
+                :key="index"
+                :ref="el => { if (el) dotRefs[index] = el }"
+                class="dot"
+                :class="{ active: currentTestimonial === index }"
+                @click="setTestimonial(index)">
+          </span>
         </div>
       </div>
     </section>
@@ -278,7 +258,35 @@ export default {
       },
       errors: {},
       isSubmitting: false,
-      currentTestimonial: 0
+      currentTestimonial: 0,
+      testimonialRefs: [],
+      dotRefs: [],
+      testimonials: [
+        {
+          text: '<b>Pet World thực sự là thiên đường cho thú cưng!</b> Tôi đã tìm thấy mọi thứ mình cần cho bé cún của mình, từ thức ăn, phụ kiện đến dịch vụ spa. Đội ngũ nhân viên rất nhiệt tình tư vấn và cũng chuyên nghiệp!',
+          author: {
+            name: 'Phạm Nhật Vượng',
+            title: 'Khách hàng',
+            image: 'https://media.vneconomy.vn/w800/images/upload/2023/11/17/ong-pham-nhat-vuong.jpg'
+          }
+        },
+        {
+          text: '<b>Dịch vụ tuyệt vời!</b> Tôi rất ấn tượng với sự chuyên nghiệp và tận tâm của đội ngũ Pet World. Các sản phẩm đều chất lượng và giá cả hợp lý.',
+          author: {
+            name: 'Nguyễn Thị A',
+            title: 'Khách hàng thân thiết',
+            image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80'
+          }
+        },
+        {
+          text: '<b>Mèo nhà tôi rất thích!</b> Thức ăn và đồ chơi từ Pet World luôn là lựa chọn hàng đầu của tôi. Giao hàng nhanh chóng và đóng gói cẩn thận.',
+          author: {
+            name: 'Trần Văn B',
+            title: 'Khách hàng',
+            image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80'
+          }
+        }
+      ]
     }
   },
   methods: {
@@ -317,21 +325,15 @@ export default {
       } else {
         this.isSubmitting = false
       }
+    },
+    setTestimonial(index) {
+      this.currentTestimonial = index
     }
   },
   mounted() {
     // Auto slide testimonials
     setInterval(() => {
-      const dots = document.querySelectorAll('.testimonial-dots .dot')
-      const quotes = document.querySelectorAll('.testimonial-quote')
-      
-      dots[this.currentTestimonial].classList.remove('active')
-      quotes[this.currentTestimonial].classList.remove('active')
-      
-      this.currentTestimonial = (this.currentTestimonial + 1) % dots.length
-      
-      dots[this.currentTestimonial].classList.add('active')
-      quotes[this.currentTestimonial].classList.add('active')
+      this.currentTestimonial = (this.currentTestimonial + 1) % this.testimonials.length
     }, 5000)
   }
 }
@@ -731,19 +733,203 @@ export default {
   margin-bottom: 10px;
 }
 
-@media (max-width: 900px) {
-  .about-hero, .testimonial-section, .contact-section, .about-section, .partner-section, .store-section {
+/* Tablet (768px) */
+@media (max-width: 768px) {
+  .about-hero {
     flex-direction: column;
-    margin: 0 10px;
-    padding: 18px;
+    text-align: center;
+    margin: 20px;
+    min-height: auto;
   }
-  .about-hero-img, .testimonial-img, .contact-info {
-    margin-top: 24px;
+
+  .about-hero-content {
+    margin-bottom: 40px;
+  }
+
+  .about-hero-content h1 {
+    font-size: 28px;
+  }
+
+  .about-hero-img {
+    justify-content: center;
+    min-width: 250px;
+    min-height: 250px;
+  }
+
+  .hero-bg {
+    width: 300px;
+    height: 300px;
+  }
+
+  .about-hero-img img {
+    width: 250px;
+    height: 250px;
+  }
+
+  .cta-buttons {
+    justify-content: center;
+  }
+
+  .about-section,
+  .testimonial-section,
+  .partner-section,
+  .store-section,
+  .contact-section {
+    margin: 20px;
+    padding: 24px;
+  }
+
+  .about-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .store-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .store-item {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .contact-section {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .contact-info {
     padding-left: 0;
   }
-  .about-stats, .store-list, .partner-logos {
+
+  .form-row {
     flex-direction: column;
-    gap: 18px;
+    gap: 14px;
+  }
+}
+
+/* Mobile (480px) */
+@media (max-width: 480px) {
+  .about-hero {
+    margin: 10px;
+  }
+
+  .about-hero-content h1 {
+    font-size: 24px;
+  }
+
+  .brand {
+    font-size: 20px;
+  }
+
+  .slogan {
+    font-size: 15px;
+  }
+
+  .cta-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  .about-section,
+  .testimonial-section,
+  .partner-section,
+  .store-section,
+  .contact-section {
+    margin: 10px;
+    padding: 16px;
+  }
+
+  .section-title {
+    font-size: 22px;
+  }
+
+  .about-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-item {
+    padding: 12px;
+  }
+
+  .stat-number {
+    font-size: 24px;
+  }
+
+  .testimonial-quote {
+    font-size: 15px;
+    padding: 12px 16px;
+  }
+
+  .testimonial-author {
+    font-size: 14px;
+  }
+
+  .partner-logos {
+    gap: 12px;
+  }
+
+  .partner-logos img {
+    height: 32px;
+  }
+
+  .store-item {
+    padding: 12px;
+  }
+
+  .store-item img {
+    width: 100%;
+    height: 100px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .contact-form button {
+    font-size: 16px;
+    padding: 10px 0;
+  }
+
+  .contact-info ul {
+    font-size: 14px;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+}
+
+/* Add smooth transitions */
+.about-hero,
+.about-section,
+.testimonial-section,
+.partner-section,
+.store-section,
+.contact-section,
+.stat-item,
+.store-item,
+.testimonial-quote {
+  transition: all 0.3s ease;
+}
+
+/* Improve touch targets for mobile */
+@media (hover: none) {
+  .cta-btn,
+  .store-map-btn,
+  .social-link,
+  .dot {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    min-height: 44px;
   }
 }
 </style>

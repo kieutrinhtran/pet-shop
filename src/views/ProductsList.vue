@@ -154,4 +154,113 @@ export default {
 .add-to-cart:hover {
   background-color: #45a049;
 }
+
+/* Tablet (768px) */
+@media (max-width: 768px) {
+  .products-container {
+    padding: 20px;
+  }
+
+  .filters {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    height: 100vh;
+    background: white;
+    z-index: 1000;
+    padding: 20px;
+    transition: left 0.3s ease;
+  }
+
+  .filters.active {
+    left: 0;
+  }
+
+  .filter-toggle {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .product-card {
+    padding: 15px;
+  }
+
+  .product-card img {
+    height: 200px;
+  }
+
+  .sort-options {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .sort-options select {
+    width: 100%;
+  }
+}
+
+/* Mobile (480px) */
+@media (max-width: 480px) {
+  .products-container {
+    padding: 15px;
+  }
+
+  .filters {
+    width: 100%;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-card {
+    padding: 12px;
+  }
+
+  .product-card img {
+    height: 180px;
+  }
+
+  .product-card h3 {
+    font-size: 16px;
+  }
+
+  .product-card .price {
+    font-size: 15px;
+  }
+
+  .sort-options {
+    flex-direction: column;
+  }
+
+  .sort-options select,
+  .sort-options button {
+    width: 100%;
+  }
+}
+
+/* Add smooth transitions */
+.filters,
+.product-card,
+.sort-options select,
+.sort-options button {
+  transition: all 0.3s ease;
+}
+
+/* Improve touch targets for mobile */
+@media (hover: none) {
+  .filter-toggle,
+  .product-card button,
+  .sort-options select,
+  .sort-options button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
 </style> 

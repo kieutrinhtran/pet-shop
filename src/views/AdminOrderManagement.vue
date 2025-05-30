@@ -1,7 +1,5 @@
 <template>
   <div class="admin-order-management">
-    <HeaderComponent />
-    
     <!-- Hero section -->
     <div class="hero-section">
       <h1>Quản lý đơn hàng</h1>
@@ -90,34 +88,79 @@
       </div>
 
       <!-- Pagination -->
-      <div class="pagination">
-        <button
-          @click="currentPage--"
-          :disabled="currentPage === 1"
-          class="page-btn"
-        >
-          Trước
-        </button>
-        <span class="page-info">Trang {{ currentPage }} / {{ totalPages }}</span>
-        <button
-          @click="currentPage++"
-          :disabled="currentPage === totalPages"
-          class="page-btn"
-        >
-          Sau
-        </button>
-      </div>
+      <BasePagination
+        :current-page="currentPage"
+        :total-pages="totalPages"
+        @prev="currentPage > 1 && (currentPage--, applyFilters())"
+        @next="currentPage < totalPages && (currentPage++, applyFilters())"
+      />
     </div>
 
-    <FooterComponent />
+    <!-- Order Confirmation Modal -->
+    <div v-if="showEditModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Xác nhận đơn hàng #{{ editingOrder.id }}</h2>
+          <button class="close-btn" @click="showEditModal = false">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="order-info">
+            <div class="info-group">
+              <label>Khách hàng:</label>
+              <span>{{ editingOrder.customer_name }}</span>
+            </div>
+            <div class="info-group">
+              <label>Email:</label>
+              <span>{{ editingOrder.customer_email }}</span>
+            </div>
+            <div class="info-group">
+              <label>Ngày đặt:</label>
+              <span>{{ formatDate(editingOrder.created_at) }}</span>
+            </div>
+            <div class="info-group">
+              <label>Tổng giá trị:</label>
+              <span>{{ formatPrice(editingOrder.total_amount) }}</span>
+            </div>
+            <div class="info-group">
+              <label>Phương thức thanh toán:</label>
+              <span>{{ getPaymentMethodText(editingOrder.payment_method) }}</span>
+            </div>
+          </div>
+
+          <div class="status-update">
+            <div class="form-group">
+              <label>Trạng thái đơn hàng:</label>
+              <select v-model="editingOrder.status">
+                <option value="pending">Chờ xác nhận</option>
+                <option value="processing">Đang xử lý</option>
+                <option value="shipped">Đang giao hàng</option>
+                <option value="delivered">Đã nhận hàng</option>
+                <option value="cancelled">Đã hủy</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Trạng thái thanh toán:</label>
+              <select v-model="editingOrder.payment_status">
+                <option value="pending">Chờ thanh toán</option>
+                <option value="paid">Đã thanh toán</option>
+                <option value="failed">Thanh toán thất bại</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="cancel-btn" @click="showEditModal = false">Hủy</button>
+          <button class="save-btn" @click="saveOrderChanges">Lưu thay đổi</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import HeaderComponent from '@/components/HeaderComponent.vue';
-import FooterComponent from '@/components/FooterComponent.vue';
 import axios from "axios";
+import BasePagination from '@/components/BasePagination.vue'
 
 const orders = ref([]);
 const filteredOrders = ref([]);
@@ -240,9 +283,12 @@ const getPaymentStatusText = (status) => {
 // CRUD operations
 const editOrder = async (orderId) => {
   try {
-    const response = await axios.get(`${apiBaseUrl}/orders/${orderId}`);
-    editingOrder.value = response.data;
-    showEditModal.value = true;
+    // Tìm đơn hàng trong mảng orders
+    const order = orders.value.find(o => o.id === orderId);
+    if (order) {
+      editingOrder.value = { ...order };
+      showEditModal.value = true;
+    }
   } catch (err) {
     error.value = 'Không thể tải thông tin đơn hàng';
     console.error(err);
@@ -262,12 +308,134 @@ const deleteOrder = async (orderId) => {
   }
 };
 
+// Thêm hàm saveOrderChanges
+const saveOrderChanges = async () => {
+  try {
+    // Tìm và cập nhật đơn hàng trong mảng orders
+    const index = orders.value.findIndex(order => order.id === editingOrder.value.id);
+    if (index !== -1) {
+      orders.value[index] = { ...editingOrder.value };
+      applyFilters();
+      showEditModal.value = false;
+    }
+  } catch (err) {
+    error.value = 'Không thể cập nhật đơn hàng';
+    console.error(err);
+  }
+};
+
 // Load initial data
 onMounted(async () => {
   try {
     loading.value = true;
-    const response = await axios.get(`${apiBaseUrl}/orders`);
-    orders.value = response.data;
+    
+    //chờ file api rồi sửa
+    // const response = await axios.get(`${apiBaseUrl}/orders`);
+    // orders.value = response.data;
+
+    // Mock data thay vì gọi API
+    orders.value = [
+      {
+        id: 'ORD001',
+        created_at: '2024-03-15T10:30:00',
+        status: 'pending',
+        total_amount: 1250000,
+        payment_method: 'cod',
+        payment_status: 'pending',
+        customer_name: 'Nguyễn Văn A',
+        customer_email: 'nguyenvana@gmail.com'
+      },
+      {
+        id: 'ORD002',
+        created_at: '2024-03-14T15:45:00',
+        status: 'processing',
+        total_amount: 2500000,
+        payment_method: 'bank_transfer',
+        payment_status: 'paid',
+        customer_name: 'Trần Thị B',
+        customer_email: 'tranthib@gmail.com'
+      },
+      {
+        id: 'ORD003',
+        created_at: '2024-03-13T09:20:00',
+        status: 'shipped',
+        total_amount: 1800000,
+        payment_method: 'credit_card',
+        payment_status: 'paid',
+        customer_name: 'Lê Văn C',
+        customer_email: 'levanc@gmail.com'
+      },
+      {
+        id: 'ORD004',
+        created_at: '2024-03-12T14:15:00',
+        status: 'delivered',
+        total_amount: 3200000,
+        payment_method: 'cod',
+        payment_status: 'paid',
+        customer_name: 'Phạm Thị D',
+        customer_email: 'phamthid@gmail.com'
+      },
+      {
+        id: 'ORD005',
+        created_at: '2024-03-11T11:30:00',
+        status: 'cancelled',
+        total_amount: 950000,
+        payment_method: 'bank_transfer',
+        payment_status: 'failed',
+        customer_name: 'Hoàng Văn E',
+        customer_email: 'hoangvane@gmail.com'
+      },
+      {
+        id: 'ORD006',
+        created_at: '2024-03-10T16:45:00',
+        status: 'pending',
+        total_amount: 1500000,
+        payment_method: 'credit_card',
+        payment_status: 'pending',
+        customer_name: 'Đỗ Thị F',
+        customer_email: 'dothif@gmail.com'
+      },
+      {
+        id: 'ORD007',
+        created_at: '2024-03-09T13:20:00',
+        status: 'processing',
+        total_amount: 2800000,
+        payment_method: 'cod',
+        payment_status: 'paid',
+        customer_name: 'Vũ Văn G',
+        customer_email: 'vuvang@gmail.com'
+      },
+      {
+        id: 'ORD008',
+        created_at: '2024-03-08T10:15:00',
+        status: 'shipped',
+        total_amount: 2100000,
+        payment_method: 'bank_transfer',
+        payment_status: 'paid',
+        customer_name: 'Đặng Thị H',
+        customer_email: 'dangthih@gmail.com'
+      },
+      {
+        id: 'ORD009',
+        created_at: '2024-03-07T15:30:00',
+        status: 'delivered',
+        total_amount: 1750000,
+        payment_method: 'credit_card',
+        payment_status: 'paid',
+        customer_name: 'Bùi Văn I',
+        customer_email: 'buivani@gmail.com'
+      },
+      {
+        id: 'ORD010',
+        created_at: '2024-03-06T09:45:00',
+        status: 'cancelled',
+        total_amount: 1200000,
+        payment_method: 'cod',
+        payment_status: 'failed',
+        customer_name: 'Ngô Thị K',
+        customer_email: 'ngothik@gmail.com'
+      }
+    ];
     applyFilters();
   } catch (err) {
     error.value = 'Không thể tải danh sách đơn hàng';
@@ -433,5 +601,137 @@ th {
 .page-info {
   font-size: 0.875rem;
   color: #666;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.modal-body {
+  padding: 1rem;
+}
+
+.order-info {
+  margin-bottom: 1.5rem;
+}
+
+.info-group {
+  display: flex;
+  margin-bottom: 0.75rem;
+}
+
+.info-group label {
+  width: 150px;
+  font-weight: 600;
+  color: #666;
+}
+
+.status-update {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #666;
+}
+
+.form-group select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+}
+
+.modal-footer {
+  padding: 1rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.cancel-btn, .save-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cancel-btn {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  color: #666;
+}
+
+.save-btn {
+  background: #4a90e2;
+  border: none;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #e9ecef;
+}
+
+.save-btn:hover {
+  background: #357abd;
+}
+
+.action-btn.edit {
+  color: #4a90e2;
+}
+
+.action-btn.delete {
+  color: #dc3545;
 }
 </style>

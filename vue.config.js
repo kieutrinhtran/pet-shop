@@ -3,7 +3,7 @@ module.exports = defineConfig({
   transpileDependencies: true,
   pages: {
     index: {
-      entry: 'frontend/src/main.js'
+      entry: 'src/main.js'
     }
   }
 })

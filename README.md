@@ -139,7 +139,14 @@ git commit -m "initial commit"
    ```bash
    git push -u origin trinh
    ```
-
+6. Fetch về từ nhánh main
+   ```bash
+   git fetch origin main
+   ```
+7. Merge các thay đổi từ main vào branch hiện tại của bạn
+   ```bash
+   git merge origin/main
+   ```
 ---
 
 ## Cài đặt và chạy dự án

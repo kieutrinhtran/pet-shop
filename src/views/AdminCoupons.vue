@@ -68,7 +68,7 @@
       <input
         type="text"
         v-model="searchTerm"
-        placeholder="Tìm kiếm sản phẩm theo tên..."
+        placeholder="Tìm kiếm sản phẩm theo mã khuyến mãi..."
         class="form-control p-2 border border-gray-300 rounded w-full"
       />
     </div>
@@ -78,34 +78,37 @@
       <table class="table custom-table" style="width: 100%">
         <thead>
           <tr>
-            <th @click="sortBy('product_id')" style="cursor: pointer">ID sản phẩm</th>
-            <th @click="sortBy('product_name')" style="cursor: pointer">Tên sản phẩm</th>
-            <th @click="sortBy('pet_type')" style="cursor: pointer">Loại thú nuôi</th>
-            <th @click="sortBy('base_price')" style="cursor: pointer">Giá gốc</th>
-            <th @click="sortBy('discount_price')" style="cursor: pointer">Giá tiền</th>
-            <th @click="sortBy('stock')" style="cursor: pointer">Hàng tồn kho</th>
+            <th @click="sortBy('promotion_id')" style="cursor: pointer">ID khuyến mãi</th>
+            <th @click="sortBy('code')" style="cursor: pointer">Mã khuyến mãi</th>
+            <th @click="sortBy('discount_percent')" style="cursor: pointer">% giảm giá</th>
+            <th @click="sortBy('total_voucher')" style="cursor: pointer">Số lượng</th>
+            <th @click="sortBy('used_voucher')" style="cursor: pointer">Đã sử dụng</th>
+            <th @click="sortBy('start_date')" style="cursor: pointer">Ngày bắt đầu</th>
+            <th @click="sortBy('end_date')" style="cursor: pointer">Ngày kết thúc</th>
             <th class="text-center">Thao tác</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in paginatedProducts" :key="item.product_id">
+          <tr v-for="item in filteredAndSortedProducts" :key="item.promotion_id">
             <td>
-              <strong>{{ item.product_id }}</strong>
+              <strong>{{ item.promotion_id }}</strong>
             </td>
             <td>
-              <div class="fw-bold">{{ item.product_name }}</div>
+              <div class="fw-bold">{{ item.code }}</div>
             </td>
-            <td class="text-xl font-semibold">{{ item.pet_type }}</td>
-            <td>{{ formatCurrency(item.base_price) }}</td>
-            <td>{{ formatCurrency(item.discount_price) }}</td>
-            <td>{{ item.stock }}</td>
+            <td class="text-xl font-semibold">{{ item.discount_percent }} %</td>
+            <td>{{ item.total_voucher }}</td>
+            <td>{{ item.used_voucher }}</td>
+            <td>{{ item.start_date }}</td>
+            <td>{{ item.end_date }}</td>
             <td class="text-center">
               <i
                 class="fas fa-edit action-icon me-2"
                 @click="openEditPopup(item)"
                 style="cursor: pointer"
               ></i>
-              <i class="fas fa-trash-alt action-icon" @click="deleteProduct(item.product_id)"></i>
+
+              <i class="fas fa-trash-alt action-icon" @click="deleteProduct(item.promotion_id)"></i>
             </td>
           </tr>
           <tr v-if="filteredAndSortedProducts.length === 0">
@@ -135,7 +138,7 @@
           <div class="mb-3">
             <label class="block mb-1 font-medium text-sm">Giá gốc</label>
             <input
-              v-model.number="editingProduct.base_price"
+              v-model.number="editingProduct.total_voucher"
               type="number"
               min="0"
               class="w-full border border-gray-300 rounded p-1 text-sm"
@@ -146,7 +149,7 @@
           <div class="mb-3">
             <label class="block mb-1 font-medium text-sm">Giá tiền</label>
             <input
-              v-model.number="editingProduct.discount_price"
+              v-model.number="editingProduct.used_voucher"
               type="number"
               min="0"
               class="w-full border border-gray-300 rounded p-1 text-sm"
@@ -188,18 +191,17 @@
               <label class="inline-flex items-center text-sm">
                 <input
                   type="radio"
-                  :value="1"
-                  v-model.number="editingProduct.is_active"
+                  value="true"
+                  v-model="editingProduct.isActive"
                   class="form-radio"
                 />
                 <span class="ml-2 select-none">Có</span>
               </label>
-
               <label class="inline-flex items-center text-sm">
                 <input
                   type="radio"
-                  :value="0"
-                  v-model.number="editingProduct.is_active"
+                  value="false"
+                  v-model="editingProduct.isActive"
                   class="form-radio"
                 />
                 <span class="ml-2 select-none">Không</span>
@@ -231,12 +233,11 @@
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
     >
       <div class="bg-white rounded p-6 w-[420px] max-w-full">
-        <h3 class="text-lg font-semibold mt-4 text-center">Thêm sản phẩm mới</h3>
+        <h3 class="text-lg font-semibold mb-4 text-center">Thêm sản phẩm mới</h3>
         <form @submit.prevent="createProduct">
           <div class="mb-1">
             <label class="block mb-1 font-medium text-sm">Tên sản phẩm</label>
             <input
-
               v-model="creatingProduct.product_name"
               type="text"
               class="w-full border border-gray-300 rounded text-sm"
@@ -244,72 +245,48 @@
             />
           </div>
 
-          <div class="mb-1">
+          <div class="mb-3">
             <label class="block mb-1 font-medium text-sm">Giá gốc</label>
             <input
-              v-model.number="creatingProduct.base_price"
+              v-model.number="creatingProduct.total_voucher"
               type="number"
               min="0"
-              class="w-full border border-gray-300 rounded text-sm"
+              class="w-full border border-gray-300 rounded p-1 text-sm"
               required
             />
           </div>
-          <div class="mb-1">
+
+          <div class="mb-3">
             <label class="block mb-1 font-medium text-sm">Giá tiền</label>
             <input
-              v-model.number="creatingProduct.discount_price"
+              v-model.number="creatingProduct.used_voucher"
               type="number"
               min="0"
-              class="w-full border border-gray-300 rounded text-sm"
+              class="w-full border border-gray-300 rounded p-1 text-sm"
               required
             />
           </div>
-          <div class="mb-1">
+
+          <div class="mb-3">
             <label class="block mb-1 font-medium text-sm">Loại thú cưng</label>
             <input
               v-model="creatingProduct.pet_type"
               type="text"
-              class="w-full border border-gray-300 rounded text-sm"
+              class="w-full border border-gray-300 rounded p-1 text-sm"
             />
           </div>
 
-          <div class="mb-1">
+          <div class="mb-3">
             <label class="block mb-1 font-medium text-sm">Hàng tồn kho</label>
             <input
               v-model.number="creatingProduct.stock"
               type="number"
               min="0"
-              class="w-full border border-gray-300 rounded text-sm"
-            />
-          </div>
-          <div class="mb-1">
-            <label class="block mb-1 font-medium text-sm">Danh mục sản phẩm</label>
-            <select
-              v-model="creatingProduct.category_id"
-              class="w-full border border-gray-300 rounded p-1 text-sm"
-            >
-              <option value="" disabled>-- Chọn danh mục --</option>
-              <option
-                v-for="category in categories"
-                :key="category.category_id"
-                :value="category.category_id"
-              >
-                {{ category.category_name }}
-              </option>
-            </select>
-          </div>
-
-          <div class="mb-1">
-            <label class="block mb-1 font-medium text-sm">Ảnh</label>
-            <input
-              type="file"
-              @change="handleImageUpload"
-              accept="image/*"
               class="w-full border border-gray-300 rounded p-1 text-sm"
             />
           </div>
 
-          <div class="mb-1">
+          <div class="mb-3">
             <label class="block mb-1 font-medium text-sm">Mô tả sản phẩm</label>
             <textarea
               v-model="creatingProduct.description"
@@ -318,14 +295,14 @@
             ></textarea>
           </div>
 
-          <div class="mb-1">
+          <div class="mb-3">
             <label class="block mb-1 font-medium text-sm">Trạng thái hoạt động</label>
             <div class="flex items-center gap-4">
               <label class="inline-flex items-center text-sm">
                 <input
                   type="radio"
                   value="true"
-                  v-model="creatingProduct.is_active"
+                  v-model="creatingProduct.isActive"
                   class="form-radio"
                 />
                 <span class="ml-2 select-none">Có</span>
@@ -334,15 +311,15 @@
                 <input
                   type="radio"
                   value="false"
-                  v-model="creatingProduct.is_active"
+                  v-model="creatingProduct.isActive"
                   class="form-radio"
                 />
                 <span class="ml-2 select-none">Không</span>
               </label>
             </div>
           </div>
-          
-          <div class="flex justify-end gap-3 mb-3">
+
+          <div class="flex justify-end gap-3 mt-4">
             <button
               type="button"
               @click="closeCreatePopup"
@@ -360,33 +337,6 @@
         </form>
       </div>
     </div>
-    <div class="flex justify-center items-center gap-3 my-4">
-      <button
-        class="px-3 py-1 border rounded disabled:opacity-50"
-        :disabled="currentPage === 1"
-        @click="currentPage--"
-      >
-        Trước
-      </button>
-
-      <button
-        v-for="page in totalPages"
-        :key="page"
-        class="px-3 py-1 border rounded"
-        :class="{ 'bg-orange-400 text-white': page === currentPage }"
-        @click="currentPage = page"
-      >
-        {{ page }}
-      </button>
-
-      <button
-        class="px-3 py-1 border rounded disabled:opacity-50"
-        :disabled="currentPage === totalPages"
-        @click="currentPage++"
-      >
-        Sau
-      </button>
-    </div>
   </div>
 </template>
 
@@ -396,25 +346,31 @@ export default {
     return {
       searchTerm: '',
       products: [],
-      categories: [],
-      currentSort: 'product_id',
+      currentSort: 'promotion_id',
       currentSortDir: 'asc',
       editingProduct: null,
       loading: false,
       error: null,
-      creatingProduct: null,
-      currentPage: 1,
-      pageSize: 3
+      creatingProduct: null
     }
   },
   async mounted() {
-    this.fetchProducts()
-    this.fetchCategories()
+    this.loading = true
+    try {
+      const res = await fetch('http://localhost:8000/api/v1/promotions')
+      if (!res.ok) throw new Error('Failed to fetch products')
+      this.products = await res.json()
+    } catch (err) {
+      this.error = err.message
+      console.error(err)
+    } finally {
+      this.loading = false
+    }
   },
   computed: {
     filteredAndSortedProducts() {
       let filtered = this.products.filter(item =>
-        item.product_name.toLowerCase().includes(this.searchTerm.toLowerCase())
+        item.code.toLowerCase().includes(this.searchTerm.toLowerCase())
       )
       return filtered.slice().sort((a, b) => {
         let modifier = this.currentSortDir === 'asc' ? 1 : -1
@@ -435,30 +391,9 @@ export default {
         if (aVal > bVal) return 1 * modifier
         return 0
       })
-    },
-    paginatedProducts() {
-      const start = (this.currentPage - 1) * this.pageSize
-      return this.filteredAndSortedProducts.slice(start, start + this.pageSize)
-    },
-
-    totalPages() {
-      return Math.ceil(this.filteredAndSortedProducts.length / this.pageSize)
     }
   },
   methods: {
-    async fetchProducts() {
-      this.loading = true
-      try {
-        const res = await fetch('http://localhost:8000/api/v1/products')
-        if (!res.ok) throw new Error('Failed to fetch products')
-        this.products = await res.json()
-      } catch (err) {
-        this.error = err.message
-        console.error(err)
-      } finally {
-        this.loading = false
-      }
-    },
     formatCurrency(value) {
       if (typeof value === 'number') {
         return value.toLocaleString('vi-VN') + 'đ'
@@ -475,19 +410,21 @@ export default {
     },
     openEditPopup(product) {
       this.editingProduct = { ...product }
-      console.log(this.editingProduct)
     },
+
     closeEditPopup() {
       this.editingProduct = null
     },
     async saveEdit() {
       if (!this.editingProduct) return
+
+      // Chuyển is_active thành số
       this.editingProduct.is_active = this.editingProduct.is_active ? 1 : 0
 
       try {
         this.loading = true
         const res = await fetch(
-          `http://localhost:8000/api/v1/products/${this.editingProduct.product_id}`,
+          `http://localhost:8000/api/v1/promotions/${this.editingProduct.product_id}`,
           {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -497,8 +434,6 @@ export default {
         if (!res.ok) throw new Error('Lỗi cập nhật')
 
         const updatedProduct = await res.json()
-        await this.fetchProducts()
-        await this.fetchCategories()
 
         const index = this.products.findIndex(p => p.product_id === updatedProduct.product_id)
         if (index !== -1) {
@@ -513,117 +448,46 @@ export default {
       }
     },
     openCreatePopup() {
-      const newId = this.products.length ? Math.max(...this.products.map(p => p.product_id)) + 1 : 1
+      const newId = this.products.length
+        ? Math.max(...this.products.map(p => p.promotion_id)) + 1
+        : 1
       this.creatingProduct = {
-        product_id: newId,
+        promotion_id: newId,
         product_name: '',
-        base_price: 0,
+        total_voucher: 0,
         price: 0,
         pet_type: '',
         stock: 0,
         description: '',
-        is_active: 1
+        isActive: 'true'
       }
     },
     closeCreatePopup() {
       this.creatingProduct = null
     },
-    async createProduct() {
-      try {
-        this.loading = true
-        const res = await fetch('http://localhost:8000/api/v1/products', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(this.creatingProduct)
-        })
-        const contentType = res.headers.get('content-type') || ''
-
-        if (!res.ok) {
-          // Nếu server trả lỗi, lấy nội dung lỗi dạng text để hiển thị
-          const errorText = await res.text()
-          const text = await res.text()
-          console.log('respone text', text)
-          throw new Error(`Lỗi khi tạo sản phẩm: ${errorText}`)
-        }
-
-        if (!contentType.includes('application/json')) {
-          const text = await res.text()
-          throw new Error(`Phản hồi không phải JSON: ${text}`)
-        }
-
-        const data = await res.json()
-
-        // Lấy product mới từ data.success (theo cấu trúc server trả về)
-        const newProduct = data.success
-
-        this.products.push(newProduct)
-
-        // Reset form tạo mới
-        this.creatingProduct = {
-          product_name: '',
-          category_id: '',
-          description: '',
-          pet_type: '',
-          base_price: '',
-          discount_price: '',
-          stock: '',
-          image_url: '',
-          is_active: 1
-        }
-
-        this.closeCreatePopup()
-      } catch (error) {
-        alert(error.message)
-        console.error(error)
-      } finally {
-        this.loading = false
-      }
+    createProduct() {
+      this.products.push({ ...this.creatingProduct })
+      this.closeCreatePopup()
     },
-    async fetchCategories() {
-      this.loadingCategories = true
-      try {
-        const res = await fetch('http://localhost:8000/api/v1/categories')
-        if (!res.ok) throw new Error('Lỗi khi lấy danh sách categories')
-        this.categories = await res.json()
-      } catch (error) {
-        this.errorCategories = error.message
-        console.error(error)
-      } finally {
-        this.loadingCategories = false
-      }
-    },
-
     deleteProduct() {
       if (confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
-        //BE todo
+        //xem hàm mẫu
+        //  async deleteProduct(promotion_id) {
+        //   if (confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
+        //     try {
+        //       const res = await fetch(`/api/products/${promotion_id}`, {
+        //         method: 'DELETE',
+        //       })
+        //       if (!res.ok) throw new Error('Xóa thất bại')
+        //       // ✅ Gọi lại fetch sau khi xoá
+        //       await this.fetchProducts()
+        //     } catch (err) {
+        //       console.error('Lỗi khi xóa sản phẩm:', err)
+        //       alert('Không thể xóa sản phẩm. Vui lòng thử lại.')
+        //     }
+        //   }
+        // },
       }
-    },
-    handleImageUpload(event) {
-      const file = event.target.files[0]
-      if (file) {
-        // Optional: Hiển thị ảnh trước khi upload
-        const reader = new FileReader()
-        reader.onload = e => {
-          this.creatingProduct.image_url = e.target.result // base64 preview
-        }
-        reader.readAsDataURL(file)
-
-        // Nếu bạn cần gửi file này lên server:
-        this.creatingProduct.image_file = file
-      }
-    },
-    goToPage(page) {
-      if (page < 1) page = 1
-      if (page > this.totalPages) page = this.totalPages
-      this.currentPage = page
-    },
-
-    prevPage() {
-      this.goToPage(this.currentPage - 1)
-    },
-
-    nextPage() {
-      this.goToPage(this.currentPage + 1)
     }
   }
 }

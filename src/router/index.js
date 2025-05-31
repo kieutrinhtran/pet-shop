@@ -101,13 +101,18 @@ const routes = [
       {
         path: 'products',
         name: 'AdminProducts',
-        component: AdminProducts
+        component: () => import('@/views/AdminProducts.vue')
+      },
+      {
+        path: 'coupons',
+        name: 'AdminCoupons',
+        component: () => import('@/views/AdminCoupons.vue')
       },
       {
         path: 'statistics',
         name: 'AdminStatistics',
         component: () => import('@/views/AdminStatistics.vue')
-      },
+      }
     ]
   },
   {
@@ -127,4 +132,4 @@ const router = createRouter({
   routes
 })
 
-export default router 
+export default router

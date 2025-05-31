@@ -111,7 +111,7 @@ git commit -m "initial commit"
 
 ---
 
-## 🌿 Quản lý nhánh và đẩy code lên GitHub
+## 🌿 Một số lệnh để quản lý nhánh và đẩy code lên GitHub trong terminal
 
 1. Xem các nhánh hiện có:
 
@@ -146,6 +146,10 @@ git commit -m "initial commit"
 7. Merge các thay đổi từ main vào branch hiện tại của bạn
    ```bash
    git merge origin/main
+   ```
+8. Merge các thay đổi từ branch hiện tại (trinh) vào main
+   ```bash
+   git merge trinh
    ```
 ---
 

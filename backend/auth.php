@@ -1,7 +1,7 @@
 <?php
-header('Content-Type: application/json');
 
-require 'db.php';
+
+require_once 'db.php';
 $action = $_SERVER['REQUEST_METHOD'] === 'POST' ? ($_POST['action'] ?? '') : '';
 
 if ($action === 'register') {

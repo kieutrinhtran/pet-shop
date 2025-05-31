@@ -12,6 +12,7 @@ import LoginSuccess from '../views/LoginSuccess.vue'
 import RegisterSuccess from '../views/RegisterSuccess.vue'
 import HomePage from '../views/HomePage.vue'
 import AdminOrderManagement from '../views/AdminOrderManagement.vue'
+import AdminProducts from '../views/AdminProducts.vue'
 import AdminLogin from '@/views/AdminLogin.vue'
 import AdminLayout from '@/layouts/AdminLayout.vue'
 import CustomerLayout from '@/layouts/CustomerLayout.vue'
@@ -96,6 +97,11 @@ const routes = [
         path: 'orders',
         name: 'AdminOrderManagement',
         component: AdminOrderManagement
+      },
+      {
+        path: 'products',
+        name: 'AdminProducts',
+        component: AdminProducts
       },
       {
         path: 'statistics',

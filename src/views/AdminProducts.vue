@@ -105,7 +105,6 @@
                 @click="openEditPopup(item)"
                 style="cursor: pointer"
               ></i>
-
               <i class="fas fa-trash-alt action-icon" @click="deleteProduct(item.product_id)"></i>
             </td>
           </tr>
@@ -237,6 +236,7 @@
           <div class="mb-1">
             <label class="block mb-1 font-medium text-sm">Tên sản phẩm</label>
             <input
+
               v-model="creatingProduct.product_name"
               type="text"
               class="w-full border border-gray-300 rounded text-sm"
@@ -254,7 +254,6 @@
               required
             />
           </div>
-
           <div class="mb-1">
             <label class="block mb-1 font-medium text-sm">Giá tiền</label>
             <input
@@ -265,7 +264,6 @@
               required
             />
           </div>
-
           <div class="mb-1">
             <label class="block mb-1 font-medium text-sm">Loại thú cưng</label>
             <input
@@ -343,7 +341,7 @@
               </label>
             </div>
           </div>
-
+          
           <div class="flex justify-end gap-3 mb-3">
             <button
               type="button"
